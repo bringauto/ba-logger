@@ -3,5 +3,7 @@
 
 #include <iostream>
 
+
+
 void bringauto::logging::FileSink::init(const std::string &programName) {
 }
