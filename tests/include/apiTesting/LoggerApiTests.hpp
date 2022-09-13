@@ -9,19 +9,22 @@
 
 #include <string>
 
-class LoggerApiTests : public ::testing::Test {
+
+
+class LoggerApiTests: public ::testing::Test {
 protected:
 
-    void SetUp() override {
-    }
+	void SetUp() override {
+	}
 
-    void TearDown() override {
-        bringauto::logging::Logger::destroy();
-    }
+	void TearDown() override {
+		bringauto::logging::Logger::destroy();
+	}
 
-    bringauto::logging::Logger::LoggerSettings defaultLoggerSettings{"test", bringauto::logging::Logger::Verbosity::Debug};
-    bringauto::logging::ConsoleSink::Params consoleSinkParams{};
-    bringauto::logging::RemoteSink::Params remoteSinkParams{"127.0.0.1",15379};
-    bringauto::logging::FileSink::Params fileSinkParams{"./","tests.txt"};
-    const std::string logMessage{"log this message"};
+	bringauto::logging::Logger::LoggerSettings defaultLoggerSettings { "test",
+																	   bringauto::logging::Logger::Verbosity::Debug };
+	bringauto::logging::ConsoleSink::Params consoleSinkParams {};
+	bringauto::logging::RemoteSink::Params remoteSinkParams { "127.0.0.1", 15379 };
+	bringauto::logging::FileSink::Params fileSinkParams { "./", "tests.txt" };
+	const std::string logMessage { "log this message" };
 };

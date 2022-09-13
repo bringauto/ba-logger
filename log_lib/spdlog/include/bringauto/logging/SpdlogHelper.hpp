@@ -4,10 +4,12 @@
 
 #include <spdlog/spdlog.h>
 
-namespace bringauto::logging{
-    class SpdlogHelper {
-    public:
-        static spdlog::level::level_enum mapToSpdlogVerbosity(Logger::Verbosity verbosity);
-    };
+
+
+namespace bringauto::logging {
+class SpdlogHelper {
+public:
+	static spdlog::level::level_enum mapToSpdlogVerbosity(Logger::Verbosity verbosity);
+};
 
 }

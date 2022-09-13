@@ -3,5 +3,7 @@
 
 #include <iostream>
 
+
+
 void bringauto::logging::RemoteSink::init(const std::string &programName) {
 }
