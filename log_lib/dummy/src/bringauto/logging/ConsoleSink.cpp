@@ -3,5 +3,7 @@
 
 #include <iostream>
 
+
+
 void bringauto::logging::ConsoleSink::init(const std::string &programName) {
 }
