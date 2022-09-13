@@ -64,6 +64,9 @@ public:
 			auto ownerId = buf.st_uid;
 			auto groupID = buf.st_gid;
 			auto myId = getuid();
+			if(myId == 0) { // is running with root privileges
+				return true;
+			}
 
 			auto permissions = std::filesystem::status(dir).permissions();
 			bool ownerWrite = (permissions & std::filesystem::perms::owner_write) != std::filesystem::perms::none;

@@ -22,7 +22,6 @@ void createFileSink() {
 
 	FileSink::Params paramFileSink { "./", "log2.txt" };
 	paramFileSink.maxFileSize = 150_B;
-	std::cout << "XX:" << paramFileSink.maxFileSize << std::endl;
 	paramFileSink.numberOfRotatedFiles = 2;
 	paramFileSink.verbosity = Logger::Verbosity::Info;
 	Logger::addSink<FileSink>(paramFileSink);
@@ -46,7 +45,7 @@ void initLogger() {
 int main(int arg, char **argv) {
 	createConsoleSink();
 	createFileSink();
-	//createRemoteSink();
+	createRemoteSink();
 	initLogger();
 
 	Logger::logInfo(std::string { "Demo app" });
