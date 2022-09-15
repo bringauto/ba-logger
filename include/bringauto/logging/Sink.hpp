@@ -9,7 +9,9 @@ namespace bringauto::logging {
  * Base class that all specific sink types will derive from
  */
 class Sink {
-public:
+private:
+	friend class Logger;
+
 	/**
 	 * Specific initialization, file sink will be added to logger
 	 * @param programName name of program, logger uses same name
