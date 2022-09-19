@@ -2,6 +2,7 @@
 
 #include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/Logger.hpp>
+#include <bringauto/logging/SizeLiterals.hpp>
 
 #include <string>
 #include <filesystem>
@@ -32,7 +33,7 @@ public:
 
 		const std::string fileName {};               ///log file name
 		const std::filesystem::path fileDir {};      /// directory path for log files
-		unsigned long maxFileSize { 1024*50 };       /// maximum size of one log file, in !bytes!
+		unsigned long long maxFileSize = 50_KiB;       /// maximum size of one log file, in !bytes!
 		/// number of files that can be created, one file will be created and additional numberOfRotatedFiles will be created to rotate
 		unsigned int numberOfRotatedFiles { 5 };
 		std::optional<Logger::Verbosity> verbosity; /// verbosity specific for sink, overrides default logger verbosity
@@ -64,6 +65,9 @@ public:
 			auto ownerId = buf.st_uid;
 			auto groupID = buf.st_gid;
 			auto myId = getuid();
+			if(myId == 0) { // is running with root privileges
+				return true;
+			}
 
 			auto permissions = std::filesystem::status(dir).permissions();
 			bool ownerWrite = (permissions & std::filesystem::perms::owner_write) != std::filesystem::perms::none;

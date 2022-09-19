@@ -12,7 +12,7 @@ void bringauto::logging::FileSink::init(const std::string &logerName) {
 		throw std::runtime_error("Logger was not initialized (" + logerName + ")");
 	}
 
-	auto sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(params_.fileDir.string() + params_.fileName,
+	auto sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(params_.fileDir/params_.fileName,
 																	   params_.maxFileSize,
 																	   params_.numberOfRotatedFiles, false);
 

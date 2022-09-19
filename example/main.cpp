@@ -3,6 +3,7 @@
 #include <bringauto/logging/FileSink.hpp>
 #include <bringauto/logging/Logger.hpp>
 #include <bringauto/logging/RemoteSink.hpp>
+#include <bringauto/logging/SizeLiterals.hpp>
 
 
 
@@ -20,7 +21,7 @@ void createFileSink() {
 	Logger::addSink<FileSink>({ "./", "log.txt" });
 
 	FileSink::Params paramFileSink { "./", "log2.txt" };
-	paramFileSink.maxFileSize = 150;
+	paramFileSink.maxFileSize = 5_MB;
 	paramFileSink.numberOfRotatedFiles = 2;
 	paramFileSink.verbosity = Logger::Verbosity::Info;
 	Logger::addSink<FileSink>(paramFileSink);
