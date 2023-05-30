@@ -1,7 +1,7 @@
 #include <bringauto/logging/Logger.hpp>
 #include <bringauto/logging/ConsoleSink.hpp>
 #include <bringauto/logging/FileSink.hpp>
-
+#include <bringauto/logging/SyslogSink.hpp>
 #include <ImplementationTests.hpp>
 
 #include <gtest/gtest.h>
@@ -202,3 +202,29 @@ TEST_F(ImplementationTests, verbosityIgnoreLogFile) {
 	EXPECT_NE(logFileContent.find(logMessage), std::string::npos);
 
 }
+
+TEST_F(ImplementationTests,destroySyslogLogger) {
+	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
+	Logger::destroy();
+	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
+}
+
+TEST_F(ImplementationTests,SyslogWrongVerbosity) {
+	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug });
+	EXPECT_ANY_THROW(Logger::log((Logger::Verbosity)INT_MAX, logMessage));
+}
+TEST_F(ImplementationTests, SyslogLoggerCreateWrongVerbosity) {
+	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings { loggerName, (Logger::Verbosity)INT_MAX }));
+}
+TEST_F(ImplementationTests, SyslogSinkCreateWrongVerbosity) {
+	SyslogSink::Params params {"lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true};
+	params.verbosity = (Logger::Verbosity)INT_MAX;
+
+	Logger::addSink<SyslogSink>(params);
+	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings(loggerName, Logger::Verbosity::Debug)));
+}
+=
