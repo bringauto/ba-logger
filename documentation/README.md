@@ -50,6 +50,12 @@ List of parameters of sinks and logger
 - verbosity - optional verbosity of sink (Logger::verbosity)
 - ipv4 - IPv4 of remote server where logs will be sended
 - port - port of server app
+- 
+### SyslogSink
+- identity - prepended to message usually program name
+- options - flags controlling operations
+- facility - what type of program is logging messages
+- enable formatting - enables formatting
 
 ## Implementations
 - dummy - for api testing purposes

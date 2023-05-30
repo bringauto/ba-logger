@@ -216,10 +216,12 @@ TEST_F(ImplementationTests,SyslogWrongVerbosity) {
 	Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug });
 	EXPECT_ANY_THROW(Logger::log((Logger::Verbosity)INT_MAX, logMessage));
 }
+
 TEST_F(ImplementationTests, SyslogLoggerCreateWrongVerbosity) {
 	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
 	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings { loggerName, (Logger::Verbosity)INT_MAX }));
 }
+
 TEST_F(ImplementationTests, SyslogSinkCreateWrongVerbosity) {
 	SyslogSink::Params params {"lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true};
 	params.verbosity = (Logger::Verbosity)INT_MAX;
@@ -227,4 +229,3 @@ TEST_F(ImplementationTests, SyslogSinkCreateWrongVerbosity) {
 	Logger::addSink<SyslogSink>(params);
 	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings(loggerName, Logger::Verbosity::Debug)));
 }
-=
