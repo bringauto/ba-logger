@@ -3,6 +3,7 @@
 #include <bringauto/logging/FileSink.hpp>
 #include <bringauto/logging/Logger.hpp>
 #include <bringauto/logging/RemoteSink.hpp>
+#include <bringauto/logging/SyslogSink.hpp>
 #include <bringauto/logging/SizeLiterals.hpp>
 
 
@@ -35,6 +36,14 @@ void createRemoteSink() {
 	Logger::addSink<RemoteSink>(paramRemoteSink);
 }
 
+void createSyslogSink() {
+	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+
+	SyslogSink::Params paramRemoteSink { "bob", bringauto::logging::Option::E_LOG_PID, bringauto::logging::Facility::E_LOG_SYSLOG, false };
+	paramRemoteSink.verbosity = Logger::Verbosity::Critical;
+	Logger::addSink<SyslogSink>(paramRemoteSink);
+}
+
 void initLogger() {
 	Logger::LoggerSettings loggerSettings { "Demo app", Logger::Verbosity::Debug };
 	loggerSettings.filter = { true, 200 };
@@ -46,6 +55,7 @@ int main(int arg, char **argv) {
 	createConsoleSink();
 	createFileSink();
 	createRemoteSink();
+	createSyslogSink();
 	initLogger();
 
 	Logger::logInfo(std::string { "Demo app" });

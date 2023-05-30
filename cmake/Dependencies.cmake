@@ -1,7 +1,3 @@
-CMLIB_DEPENDENCY(
-        URI "https://github.com/bringauto/spdlog-package.git"
-        URI_TYPE GIT
-        GIT_TAG v1.8.5
-        TYPE MODULE
-)
-FIND_PACKAGE(spdlog_package REQUIRED)
+SET(CMAKE_FIND_USE_CMAKE_SYSTEM_PATH FALSE)
+
+BA_PACKAGE_LIBRARY(spdlog v1.8.5)
