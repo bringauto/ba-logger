@@ -37,9 +37,9 @@ void createRemoteSink() {
 }
 
 void createSyslogSink() {
-	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	Logger::addSink<SyslogSink>({ "syslog", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
 
-	SyslogSink::Params paramRemoteSink { "bob", bringauto::logging::Option::E_LOG_PID, bringauto::logging::Facility::E_LOG_SYSLOG, false };
+	SyslogSink::Params paramRemoteSink { "syslog", bringauto::logging::Option::E_LOG_PID, bringauto::logging::Facility::E_LOG_SYSLOG, false };
 	paramRemoteSink.verbosity = Logger::Verbosity::Critical;
 	Logger::addSink<SyslogSink>(paramRemoteSink);
 }

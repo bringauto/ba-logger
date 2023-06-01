@@ -11,6 +11,9 @@
 
 
 namespace bringauto::logging {
+/**
+ * @brief Syslog argument for openlog(), see https://www.man7.org/linux/man-pages/man3/syslog.3.html
+ */
 enum class Option {
 	E_LOG_PID,
 	E_LOG_CONS,
@@ -20,7 +23,9 @@ enum class Option {
 	E_LOG_PERROR
 
 };
-
+/**
+ * @brief Facility specifies which type of program is logging the message, see https://www.man7.org/linux/man-pages/man3/syslog.3.html
+ */
 enum class Facility {
 	E_LOG_AUTH,
 	E_LOG_AUTHPRIV,
@@ -54,16 +59,16 @@ public:
 	 */
 	struct Params {
 		/**
-		 * Constructor, syslog sink need ident program name, option control operations of openlog() and syslog(),
-		 * facility is default to be used if not specified otherwise
+		 * Constructor, syslog sink need identity program name, option control operations of openlog() and syslog(),
+		 * facility specifies which type of program is logging the message
 		 */
-		Params(std::string identity, Option options, Facility facility, bool enableFormatting ): identiy_(identity),
-		options_(options), facility_(facility), enableFormatting_(enableFormatting) {};
-		std::string identiy_;
-		Option options_;
-		Facility facility_;
+		Params(const std::string& identity, Option options, Facility facility, bool enableFormatting ): identity(identity),
+		options(options), facility(facility), enableFormatting(enableFormatting) {};
+		std::string identity;
+		Option options;
+		Facility facility;
 		std::optional<Logger::Verbosity> verbosity;
-		bool enableFormatting_;
+		bool enableFormatting;
 	};
 
 	/**
@@ -80,7 +85,5 @@ public:
 
 private:
 	Params params_;
-	static const std::map<Option, int> optionMap;
-	static const std::map<Facility, int> facilityMap;
 };
 }
