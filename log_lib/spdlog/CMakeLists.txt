@@ -10,7 +10,7 @@ target_include_directories(bringauto_logger_spdlog PUBLIC
 )
 
 IF (NOT TARGET spdlog)
-    FIND_PACKAGE(spdlog 1.8.5 REQUIRED)
+    FIND_PACKAGE(spdlog 1.14.1 REQUIRED)
 ENDIF ()
 
 if (NOT TARGET bringauto_logger_api)

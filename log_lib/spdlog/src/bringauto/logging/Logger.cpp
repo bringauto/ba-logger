@@ -1,10 +1,6 @@
 #include <bringauto/logging/Logger.hpp>
 #include <bringauto/logging/SpdlogHelper.hpp>
 
-
-
-#define SPDLOG_FMT_EXTERNAL
-
 #include <spdlog/spdlog.h>
 
 #include <iostream>
