@@ -13,6 +13,12 @@
 
 
 namespace bringauto::logging {
+
+
+template<typename T>
+	concept Formattable = requires(T t) {
+		{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
+};
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
@@ -112,7 +118,7 @@ public:
 	 * @param args additional arguments for supported types
 	 *
 	 */
-	template <typename T, typename... Args>
+	template <typename T, typename... Args> requires (Formattable<Args> && ...)
 	static constexpr void log(Verbosity verbosity, T message, Args... args) {
 		if(!initialized_) {
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
@@ -221,6 +227,7 @@ private:
 	 */
 	static void destroyLogger();
 
+
 	/**
 	 * Logger supports fmt formatting (in future will be replaced with std::format) this method takes input string (or other supported string type like const char*)
 	 * and argument pack that contain all arguments needed to create final string and uses fmt to transform it into final string that will be logged
@@ -235,7 +242,7 @@ private:
 	static std::string getFormattedString(T message, Args ...args) {
 		std::string formattedString;
 		try {
-			formattedString = std::vformat(message, std::make_format_args(args...));
+			formattedString = std::vformat(message, std::make_format_args(args...)); 
 		} catch(std::exception &e) {
 			formattedString = "[Logger error] Wrong log format (" + std::string { e.what() } +
 							  "), please use fmt formatting for logger. Message: \"" + message
