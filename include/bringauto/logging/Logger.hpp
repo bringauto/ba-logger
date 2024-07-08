@@ -229,11 +229,10 @@ private:
 
 
 	/**
-	 * Logger supports fmt formatting (in future will be replaced with std::format) this method takes input string (or other supported string type like const char*)
-	 * and argument pack that contain all arguments needed to create final string and uses fmt to transform it into final string that will be logged
-	 * to see fmt formatting example see https://fmt.dev/latest/index.html
+	 * This method takes input string (or other supported string type like const char*)
+	 * and argument pack that contain all arguments needed to create final string that will be logged
 	 * @tparam T supported message type
-	 * @tparam Args argument pack
+	 * @tparam Args argument pack according to the format string fmt
 	 * @param message message in fmt format or simple string
 	 * @param args arguments needed in message to form final string
 	 * @return final string
