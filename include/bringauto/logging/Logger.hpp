@@ -16,8 +16,8 @@ namespace bringauto::logging {
 
 
 template<typename T>
-	concept Formattable = requires(T t) {
-		{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
+concept Formattable = requires(T t) {
+	{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
 };
 /**
  * This class handles logger creation and addition of sinks
@@ -237,7 +237,7 @@ private:
 	 * @param args arguments needed in message to form final string
 	 * @return final string
 	 */
-	template <typename T, typename ...Args>
+	template <typename T, typename ...Args>  requires (Formattable<Args> && ...)
 	static std::string getFormattedString(T message, Args ...args) {
 		std::string formattedString;
 		try {
