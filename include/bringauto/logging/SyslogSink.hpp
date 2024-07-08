@@ -67,7 +67,7 @@ public:
 		std::string identity;
 		Option options;
 		Facility facility;
-		std::optional<Logger::Verbosity> verbosity;
+		std::optional<Logger<>::Verbosity> verbosity;
 		bool enableFormatting;
 	};
 

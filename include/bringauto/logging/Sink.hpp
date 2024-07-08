@@ -10,6 +10,7 @@ namespace bringauto::logging {
  */
 class Sink {
 private:
+	template <int ID>
 	friend class Logger;
 
 	/**

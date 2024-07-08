@@ -9,7 +9,7 @@
 namespace bringauto::logging {
 class SpdlogHelper {
 public:
-	static spdlog::level::level_enum mapToSpdlogVerbosity(Logger::Verbosity verbosity);
+	static spdlog::level::level_enum mapToSpdlogVerbosity(Logger<>::Verbosity verbosity);
 };
 
 }

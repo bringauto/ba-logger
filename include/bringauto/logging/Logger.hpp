@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bringauto/logging/Sink.hpp>
+#include <bringauto/logging/LoggerId.hpp>
 
 #include <format>
 #include <memory>
@@ -24,8 +25,11 @@ template<typename T>
  * Supported message types are: std::string, const char*
  * Call addSink() to add sinks and init() to initialize the logger. log with log() and log<Verbosity>() functions
  */
+template <int ID = 0>
 class Logger {
 public:
+	std::string logger_name;
+
 	/***
 	 * Log message verbosity enum
 	 *
@@ -100,6 +104,7 @@ public:
 		if(sinks_.empty()) {
 			throw std::runtime_error("Trying to init logger without any sinks, please add sinks first.");
 		}
+		std::string logger_name = "mylogger_" + std::to_string(ID);
 		initLogger(settings);
 		programName_ = settings.programName;
 		for(const auto &sink: sinks_) {
@@ -212,8 +217,10 @@ private:
 	 * @param verbosity verbosity lvl
 	 * @param message message to log
 	 */
-	template <typename T>
-	static void logImplementation(Verbosity verbosity, T message);
+	//template <typename T>
+	//TODO
+	static void logImplementation(Verbosity verbosity, std::string message);
+	static void logImplementation(Verbosity verbosity, char const * message);
 
 	/**
 	 * Create logger prints warning if set setting is not suppor
