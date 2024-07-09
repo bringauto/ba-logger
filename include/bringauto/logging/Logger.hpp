@@ -2,6 +2,8 @@
 
 #include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/LoggerId.hpp>
+#include <bringauto/logging/LoggerVerbosity.hpp>
+#include <bringauto/logging/LoggerSettings.hpp>
 
 #include <format>
 #include <memory>
@@ -15,65 +17,21 @@
 
 namespace bringauto::logging {
 
-
+using Verbosity = LoggerVerbosity;
 template<typename T>
-	concept Formattable = requires(T t) {
-		{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
+concept Formattable = requires(T t) {
+	{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
 };
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
  * Call addSink() to add sinks and init() to initialize the logger. log with log() and log<Verbosity>() functions
  */
-template <int ID = 0>
+//template <LoggerId ID = {.id = "Default", .void}>
+template <LoggerId ID>
 class Logger {
 public:
 	std::string logger_name;
-
-	/***
-	 * Log message verbosity enum
-	 *
-	 * Debug        - debugging messages (i.e. memory dump)
-	 * Info         - actual state of program (i.e. module initialized)
-	 * Warning      - condition that might cause a problem in the future but program can ignore it (i.e. missing parameter and using default one)
-	 * Error        - error occurs but program is able to continue (i.e. failed thread)
-	 * Critical     - program is unable to continue (i.e. segmentation fault)
-	 * LowestLevel  - contains the lowest verbosity level
-	 * HighestLevel - contains the highest verbosity level
-	 */
-	enum class Verbosity: int {
-		Debug = 0,
-		Info,
-		Warning,
-		Error,
-		Critical,
-		LowestLevel = Debug,
-		HighestLevel = Critical,
-	};
-
-	/**
-	 * Structure containing global logger parameters
-	 */
-	struct LoggerSettings {
-		/**
-		 * Constructor, logger does need name of program and default verbosity in order to work correctly
-		 */
-		LoggerSettings(const std::string &nameOfProgram, Verbosity defaultVerbosity): programName(
-				nameOfProgram), verbosity(defaultVerbosity) {};
-		const std::string programName {};                      ///name of program that will be used in log
-		const Verbosity verbosity {};                          ///default verbosity for all sinks (lower bound), if set to Warning, only Warning, Error and Critical will be logged
-
-		/**
-		 * Structure defining log filters
-		 */
-		struct Filter {
-			bool filterRepeatingMessages {
-					false };                                   /// if true repeating messages will be filtered based on repeatingMessageIntervalInMS
-			std::optional<int> repeatingMessageIntervalInMS;  ///if repeating messages filter is set, repeating message will be able to log every repeatingMessageIntervalInMS milliseconds, rest of them will be discarded
-		};
-		std::optional<Filter> filter;                         ///optional filters
-		std::optional<std::string> logFormat;                 ///log format see https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
-	};
 
 	/**
 	 * Add sink defined by T with given arguments, only specialized sinks can be created, base class Sink cannot be created. This method does not create logger, only prepares sink to be included with logger
@@ -104,8 +62,8 @@ public:
 		if(sinks_.empty()) {
 			throw std::runtime_error("Trying to init logger without any sinks, please add sinks first.");
 		}
-		std::string logger_name = "mylogger_" + std::to_string(ID);
-		initLogger(settings);
+		std::string logger_name = "mylogger_" + std::to_string(ID.id);
+		ID.initLogger(settings);
 		programName_ = settings.programName;
 		for(const auto &sink: sinks_) {
 			sink->init(programName_);
@@ -129,11 +87,10 @@ public:
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
 		}
 		if(isSupportedType(message)) {
-			logImplementation<decltype(getFormattedString(message, args...))>(verbosity,
-																			  getFormattedString(message, args...));
+			ID.logImplementation(verbosity, getFormattedString(message, args...));
 			return;
 		}
-		logImplementation(Verbosity::Warning, "Unsupported message type");
+		ID.logImplementation(Verbosity::Warning, "Unsupported message type");
 	};
 
 	/**
@@ -201,7 +158,7 @@ public:
 	 * After calling delete() new logger can be created (also new sinks have to be created)
 	 */
 	static void destroy() {
-		destroyLogger();
+		ID.destroyLogger();
 		sinks_.clear();
 		initialized_ = false;
 	};
@@ -218,9 +175,14 @@ private:
 	 * @param message message to log
 	 */
 	//template <typename T>
-	//TODO
-	static void logImplementation(Verbosity verbosity, std::string message);
-	static void logImplementation(Verbosity verbosity, char const * message);
+	//TODO comment
+	static void logImplementation(Verbosity verbosity, std::string message) {
+		ID.logImplementation(Verbosity verbosity, std::string message);
+	}
+
+	static void logImplementation(Verbosity verbosity, char const * message) {
+		ID.logImplementation(Verbosity verbosity, char const *message);
+	}
 
 	/**
 	 * Create logger prints warning if set setting is not suppor

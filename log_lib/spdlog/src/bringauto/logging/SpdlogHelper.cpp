@@ -6,17 +6,17 @@
 
 
 spdlog::level::level_enum
-bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(bringauto::logging::Logger<>::Verbosity verbosity) {
+bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(bringauto::logging::LoggerVerbosity verbosity) {
 	switch(verbosity) {
-		case Logger<>::Verbosity::Debug:
+		case LoggerVerbosity::Debug:
 			return spdlog::level::debug;
-		case Logger<>::Verbosity::Info:
+		case LoggerVerbosity::Info:
 			return spdlog::level::info;
-		case Logger<>::Verbosity::Warning:
+		case LoggerVerbosity::Warning:
 			return spdlog::level::warn;
-		case Logger<>::Verbosity::Error:
+		case LoggerVerbosity::Error:
 			return spdlog::level::err;
-		case Logger<>::Verbosity::Critical:
+		case LoggerVerbosity::Critical:
 			return spdlog::level::critical;
 		default:
 			throw std::runtime_error("Unknown verbosity value");

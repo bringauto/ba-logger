@@ -36,7 +36,7 @@ public:
 		unsigned long long maxFileSize = 50_KiB;       /// maximum size of one log file, in !bytes!
 		/// number of files that can be created, one file will be created and additional numberOfRotatedFiles will be created to rotate
 		unsigned int numberOfRotatedFiles { 5 };
-		std::optional<Logger<>::Verbosity> verbosity; /// verbosity specific for sink, overrides default logger verbosity
+		std::optional<LoggerVerbosity> verbosity; /// verbosity specific for sink, overrides default logger verbosity
 	private:
 		/**
 		 * Checking validity of log directory and log name, throws std::invalid_argument if arguments are invalid

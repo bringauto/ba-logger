@@ -1,5 +1,8 @@
 #pragma once
 
+#include <bringauto/logging/LoggerId.hpp>
+#include <bringauto/logging/LoggerVerbosity.hpp>
+
 #include <string>
 
 
@@ -10,7 +13,7 @@ namespace bringauto::logging {
  */
 class Sink {
 private:
-	template <int ID>
+	template <LoggerId ID>
 	friend class Logger;
 
 	/**

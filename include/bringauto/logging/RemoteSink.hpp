@@ -28,7 +28,7 @@ public:
 		};
 		const unsigned int port {};                      ///remote app port
 		const std::string ipv4 {};                   ///remote server address
-		std::optional<Logger<>::Verbosity> verbosity; ///verbosity specific for sink, overrides default logger verbosity
+		std::optional<LoggerVerbosity> verbosity; ///verbosity specific for sink, overrides default logger verbosity
 
 	private:
 		/**
