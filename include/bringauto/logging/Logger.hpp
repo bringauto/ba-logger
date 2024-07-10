@@ -61,9 +61,8 @@ public:
 		if(sinks_.empty()) {
 			throw std::runtime_error("Trying to init logger without any sinks, please add sinks first.");
 		}
-		loggerName = "logger_" + std::to_string(ID.id);
 		loggingImpl_.initLogger(settings);
-		programName_ = settings.programName;  //TODO: change across sinks and rename to loggerName
+		programName_ = settings.programName;
 		for(const auto &sink: sinks_) {
 			sink->init(programName_);
 		}
@@ -166,7 +165,6 @@ private:
 	inline static std::vector<std::shared_ptr<Sink>> sinks_; ///static list of sinks that will be added to logger
 	inline static std::string programName_ {};                ///name of program that will be used in logging
 	inline static bool initialized_ { false };                  ///true if logger is initialized (able to log)
-	inline static std::string loggerName {};  //TODO
 	inline static K loggingImpl_ {};
 
 

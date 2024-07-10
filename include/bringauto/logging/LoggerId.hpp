@@ -9,6 +9,6 @@
 namespace bringauto::logging {
 
 struct LoggerId {
-    int id   {0}; //TODO make char const array later
+    const char id [16]  {0}; //TODO make char const array later
 };
 }

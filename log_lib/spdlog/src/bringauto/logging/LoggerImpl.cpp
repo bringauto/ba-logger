@@ -30,14 +30,14 @@ void bringauto::logging::LoggerImpl::destroyLogger() {
 
 
 
-void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, std::string message, const std::string id) {
-	auto logger = spdlog::get(id);
+void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, std::string message, const std::string &programName) {
+	auto logger = spdlog::get(programName);
 	logger->log(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(verbosity), message);
 }
 
 
-void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, char const *message, const std::string id) {
-	auto logger = spdlog::get(id);
+void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, char const *message, const std::string &programName) {
+	auto logger = spdlog::get(programName);
 	logger->log(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(verbosity), message);
 }
 
