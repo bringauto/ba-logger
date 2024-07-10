@@ -4,11 +4,11 @@ void bringauto::logging::LoggerImpl::initLogger(const bringauto::logging::Logger
 
 }
 
-void bringauto::logging::LoggerImpl::logImplementation(bringauto::logging::LoggerVerbosity verbosity, std::string message, int id){
+void bringauto::logging::LoggerImpl::logImplementation(bringauto::logging::LoggerVerbosity verbosity, std::string message, const std::string id){
 
 }
 
-void bringauto::logging::LoggerImpl::logImplementation(bringauto::logging::LoggerVerbosity verbosity, char const * message, int id){
+void bringauto::logging::LoggerImpl::logImplementation(bringauto::logging::LoggerVerbosity verbosity, char const * message, const std::string id){
 
 }
 

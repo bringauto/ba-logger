@@ -63,7 +63,7 @@ public:
 		}
 		loggerName = "logger_" + std::to_string(ID.id);
 		loggingImpl_.initLogger(settings);
-		programName_ = loggerName;  //TODO: change across sinks and rename to loggerName
+		programName_ = settings.programName;  //TODO: change across sinks and rename to loggerName
 		for(const auto &sink: sinks_) {
 			sink->init(programName_);
 		}
@@ -86,10 +86,10 @@ public:
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
 		}
 		if(isSupportedType(message)) {
-			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), ID.id);
+			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), programName_);
 			return;
 		}
-		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", ID.id);
+		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", programName_);
 	};
 
 	/**
