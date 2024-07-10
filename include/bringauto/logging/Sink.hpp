@@ -2,6 +2,7 @@
 
 #include <bringauto/logging/LoggerId.hpp>
 #include <bringauto/logging/LoggerVerbosity.hpp>
+#include <bringauto/logging/Concepts.hpp>
 
 #include <string>
 
@@ -13,7 +14,7 @@ namespace bringauto::logging {
  */
 class Sink {
 private:
-	template <LoggerId ID>
+	template <LoggerId ID, Logable K>
 	friend class Logger;
 
 	/**

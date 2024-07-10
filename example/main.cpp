@@ -9,46 +9,47 @@
 
 
 using namespace bringauto::logging;
-
+constexpr LoggerId myContext = {.id = 1};
+using Logger1 = Logger<myContext, LoggerImpl>;
 void createConsoleSink() {
-	Logger::addSink<ConsoleSink>();
+	Logger1::addSink<ConsoleSink>();
 
 	ConsoleSink::Params paramConsoleSink;
-	paramConsoleSink.verbosity = Logger::Verbosity::Critical;
-	Logger::addSink<ConsoleSink>(paramConsoleSink);
+	paramConsoleSink.verbosity = LoggerVerbosity::Critical;
+	Logger1::addSink<ConsoleSink>(paramConsoleSink);
 }
 
 void createFileSink() {
-	Logger::addSink<FileSink>({ "./", "log.txt" });
+	Logger1::addSink<FileSink>({ "./", "log.txt" });
 
 	FileSink::Params paramFileSink { "./", "log2.txt" };
 	paramFileSink.maxFileSize = 5_MB;
 	paramFileSink.numberOfRotatedFiles = 2;
-	paramFileSink.verbosity = Logger::Verbosity::Info;
-	Logger::addSink<FileSink>(paramFileSink);
+	paramFileSink.verbosity = LoggerVerbosity::Info;
+	Logger1::addSink<FileSink>(paramFileSink);
 }
 
 void createRemoteSink() {
-	Logger::addSink<RemoteSink>({ "192.168.1.1", 4507 });
+	Logger1::addSink<RemoteSink>({ "192.168.1.1", 4507 });
 
 	RemoteSink::Params paramRemoteSink { "192.168.1.2", 3333 };
-	paramRemoteSink.verbosity = Logger::Verbosity::Critical;
-	Logger::addSink<RemoteSink>(paramRemoteSink);
+	paramRemoteSink.verbosity = LoggerVerbosity::Critical;
+	Logger1::addSink<RemoteSink>(paramRemoteSink);
 }
 
 void createSyslogSink() {
-	Logger::addSink<SyslogSink>({ "syslog", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	Logger1::addSink<SyslogSink>({ "syslog", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
 
 	SyslogSink::Params paramRemoteSink { "syslog", bringauto::logging::Option::E_LOG_PID, bringauto::logging::Facility::E_LOG_SYSLOG, false };
-	paramRemoteSink.verbosity = Logger::Verbosity::Critical;
-	Logger::addSink<SyslogSink>(paramRemoteSink);
+	paramRemoteSink.verbosity = LoggerVerbosity::Critical;
+	Logger1::addSink<SyslogSink>(paramRemoteSink);
 }
 
 void initLogger() {
-	Logger::LoggerSettings loggerSettings { "Demo app", Logger::Verbosity::Debug };
+	LoggerSettings loggerSettings { "Demo app", LoggerVerbosity::Debug };
 	loggerSettings.filter = { true, 200 };
 	loggerSettings.logFormat = "*** [%H:%M:%S %z] ***";
-	Logger::init(loggerSettings);
+	Logger1::init(loggerSettings);
 }
 
 int main(int arg, char **argv) {
@@ -58,12 +59,12 @@ int main(int arg, char **argv) {
 	createSyslogSink();
 	initLogger();
 
-	Logger::logInfo(std::string { "Demo app" });
-	Logger::logInfo("Info about app");
-	Logger::logInfo("Formated {}: {:08b}, {}", "message", 54, 34.8);
-	Logger::logDebug("Debug");
-	Logger::logWarning("Warning");
-	Logger::logError("Error");
-	Logger::logCritical("Critical");
-	Logger::log(Logger::Verbosity::Error, "Error2");
+	Logger1::logInfo(std::string { "Demo app" });
+	Logger1::logInfo("Info about app");
+	Logger1::logInfo("Formated {}: {:08b}, {}", "message", 54, 34.8);
+	Logger1::logDebug("Debug");
+	Logger1::logWarning("Warning");
+	Logger1::logError("Error");
+	Logger1::logCritical("Critical");
+	Logger1::log(LoggerVerbosity::Error, "Error2");
 }

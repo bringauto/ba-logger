@@ -2,8 +2,10 @@
 
 #include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/LoggerId.hpp>
+#include <bringauto/logging/LoggerImpl.hpp>
 #include <bringauto/logging/LoggerVerbosity.hpp>
 #include <bringauto/logging/LoggerSettings.hpp>
+#include <bringauto/logging/Concepts.hpp>
 
 #include <format>
 #include <memory>
@@ -18,20 +20,17 @@
 namespace bringauto::logging {
 
 using Verbosity = LoggerVerbosity;
-template<typename T>
-concept Formattable = requires(T t) {
-	{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
-};
+
+
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
  * Call addSink() to add sinks and init() to initialize the logger. log with log() and log<Verbosity>() functions
  */
 //template <LoggerId ID = {.id = "Default", .void}>
-template <LoggerId ID>
+template <LoggerId ID, Logable K>
 class Logger {
 public:
-	std::string logger_name;
 
 	/**
 	 * Add sink defined by T with given arguments, only specialized sinks can be created, base class Sink cannot be created. This method does not create logger, only prepares sink to be included with logger
@@ -62,9 +61,9 @@ public:
 		if(sinks_.empty()) {
 			throw std::runtime_error("Trying to init logger without any sinks, please add sinks first.");
 		}
-		std::string logger_name = "mylogger_" + std::to_string(ID.id);
-		ID.initLogger(settings);
-		programName_ = settings.programName;
+		loggerName = "logger_" + std::to_string(ID.id);
+		loggingImpl_.initLogger(settings);
+		programName_ = loggerName;  //TODO: change across sinks and rename to loggerName
 		for(const auto &sink: sinks_) {
 			sink->init(programName_);
 		}
@@ -87,10 +86,10 @@ public:
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
 		}
 		if(isSupportedType(message)) {
-			ID.logImplementation(verbosity, getFormattedString(message, args...));
+			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), ID.id);
 			return;
 		}
-		ID.logImplementation(Verbosity::Warning, "Unsupported message type");
+		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", ID.id);
 	};
 
 	/**
@@ -158,7 +157,7 @@ public:
 	 * After calling delete() new logger can be created (also new sinks have to be created)
 	 */
 	static void destroy() {
-		ID.destroyLogger();
+		loggingImpl_.destroyLogger();
 		sinks_.clear();
 		initialized_ = false;
 	};
@@ -167,22 +166,9 @@ private:
 	inline static std::vector<std::shared_ptr<Sink>> sinks_; ///static list of sinks that will be added to logger
 	inline static std::string programName_ {};                ///name of program that will be used in logging
 	inline static bool initialized_ { false };                  ///true if logger is initialized (able to log)
+	inline static std::string loggerName {};  //TODO
+	inline static K loggingImpl_ {};
 
-	/**
-	 * Message logging, method will log message to logger and/or all sinks
-	 * @tparam T supported message type
-	 * @param verbosity verbosity lvl
-	 * @param message message to log
-	 */
-	//template <typename T>
-	//TODO comment
-	static void logImplementation(Verbosity verbosity, std::string message) {
-		ID.logImplementation(Verbosity verbosity, std::string message);
-	}
-
-	static void logImplementation(Verbosity verbosity, char const * message) {
-		ID.logImplementation(Verbosity verbosity, char const *message);
-	}
 
 	/**
 	 * Create logger prints warning if set setting is not suppor
@@ -231,6 +217,7 @@ private:
 		return std::is_same_v<decltype(message), std::string> ||
 			   std::is_same_v<decltype(message), const char *>;
 	}
+
 };
 
 }
