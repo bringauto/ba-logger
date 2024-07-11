@@ -1,12 +1,12 @@
 #pragma once
 
-#include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/Logger.hpp>
+#include <bringauto/logging/Sink.hpp>
 
-#include <string>
-#include <regex>
 #include <iostream>
 #include <optional>
+#include <regex>
+#include <string>
 
 
 
@@ -62,8 +62,8 @@ public:
 		 * Constructor, syslog sink need identity program name, option control operations of openlog() and syslog(),
 		 * facility specifies which type of program is logging the message
 		 */
-		Params(const std::string& identity, Option options, Facility facility, bool enableFormatting ): identity(identity),
-		options(options), facility(facility), enableFormatting(enableFormatting) {};
+		Params(const std::string &identity, Option options, Facility facility, bool enableFormatting): identity(identity),
+																									   options(options), facility(facility), enableFormatting(enableFormatting) {};
 		std::string identity;
 		Option options;
 		Facility facility;
@@ -75,7 +75,7 @@ public:
 	 * Constructor
 	 * @param params syslog sink specific parameters
 	 */
-	SyslogSink(const Params &params) : params_(params) {};
+	SyslogSink(const Params &params): params_(params) {};
 
 	/**
 	 * Specific initialization, file sink will be added to logger

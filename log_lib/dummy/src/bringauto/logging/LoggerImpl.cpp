@@ -1,5 +1,7 @@
 #include <bringauto/logging/LoggerImpl.hpp>
 
+
+
 void bringauto::logging::LoggerImpl::initLogger(const bringauto::logging::LoggerSettings &settings){
 
 }

@@ -7,7 +7,6 @@
 
 
 
-
 void bringauto::logging::LoggerImpl::initLogger(const LoggerSettings &settings) {
 	auto logger = std::make_shared<spdlog::logger>(settings.programName);
 	logger->set_level(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(settings.verbosity));
@@ -22,13 +21,9 @@ void bringauto::logging::LoggerImpl::initLogger(const LoggerSettings &settings) 
 	}
 }
 
-
 void bringauto::logging::LoggerImpl::destroyLogger() {
 	spdlog::drop_all();
 }
-
-
-
 
 void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, std::string message, const std::string &programName) {
 	auto logger = spdlog::get(programName);

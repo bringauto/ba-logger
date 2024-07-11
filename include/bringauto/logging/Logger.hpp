@@ -1,27 +1,24 @@
 #pragma once
 
-#include <bringauto/logging/Sink.hpp>
+#include <bringauto/logging/Concepts.hpp>
 #include <bringauto/logging/LoggerId.hpp>
 #include <bringauto/logging/LoggerImpl.hpp>
-#include <bringauto/logging/LoggerVerbosity.hpp>
 #include <bringauto/logging/LoggerSettings.hpp>
-#include <bringauto/logging/Concepts.hpp>
+#include <bringauto/logging/LoggerVerbosity.hpp>
+#include <bringauto/logging/Sink.hpp>
 
 #include <format>
+#include <iostream>
 #include <memory>
-#include <vector>
+#include <optional>
 #include <string>
 #include <type_traits>
-#include <optional>
-#include <iostream>
-
+#include <vector>
 
 
 namespace bringauto::logging {
 
 using Verbosity = LoggerVerbosity;
-
-
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
@@ -31,7 +28,6 @@ using Verbosity = LoggerVerbosity;
 template <LoggerId ID, Logable K>
 class Logger {
 public:
-
 	/**
 	 * Add sink defined by T with given arguments, only specialized sinks can be created, base class Sink cannot be created. This method does not create logger, only prepares sink to be included with logger
 	 * to create logger with added sinks call init() functions with global params. Sinks added after init() call will throw a runtime_error exception
@@ -39,7 +35,7 @@ public:
 	 * @tparam Args Argument pack template
 	 * @param args templates that sink requires, to see what each sink need see their constructors
 	 */
-	template <class T, typename ...Args>
+	template <class T, typename... Args>
 	static typename std::enable_if_t<std::is_base_of_v<Sink, T> && !std::is_same_v<Sink, T>, void>
 	addSink(const typename T::Params &args = {}) {
 		if(initialized_) {
@@ -79,7 +75,8 @@ public:
 	 * @param args additional arguments for supported types
 	 *
 	 */
-	template <typename T, typename... Args> requires (Formattable<Args> && ...)
+	template <typename T, typename... Args>
+		requires(Formattable<Args> && ...)
 	static constexpr void log(Verbosity verbosity, T message, Args... args) {
 		if(!initialized_) {
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
@@ -162,24 +159,10 @@ public:
 	};
 
 private:
-	inline static std::vector<std::shared_ptr<Sink>> sinks_; ///static list of sinks that will be added to logger
-	inline static std::string programName_ {};                ///name of program that will be used in logging
-	inline static bool initialized_ { false };                  ///true if logger is initialized (able to log)
+	inline static std::vector<std::shared_ptr<Sink>> sinks_;///static list of sinks that will be added to logger
+	inline static std::string programName_ {};              ///name of program that will be used in logging
+	inline static bool initialized_ {false};                ///true if logger is initialized (able to log)
 	inline static K loggingImpl_ {};
-
-
-	/**
-	 * Create logger prints warning if set setting is not suppor
-//todoted
-	 * @param settings global logger settings, if some settings that are set are not supported prints a warning message
-	 */
-	static void initLogger(const LoggerSettings &settings);
-
-	/**
-	 * Destroys logger, addSink() init() can be run again
-	 */
-	static void destroyLogger();
-
 
 	/**
 	 * This method takes input string (or other supported string type like const char*)
@@ -190,15 +173,14 @@ private:
 	 * @param args arguments needed in message to form final string
 	 * @return final string
 	 */
-	template <typename T, typename ...Args>
-	static std::string getFormattedString(T message, Args ...args) {
+	template <typename T, typename... Args>
+	static std::string getFormattedString(T message, Args... args) {
 		std::string formattedString;
 		try {
-			formattedString = std::vformat(message, std::make_format_args(args...)); 
+			formattedString = std::vformat(message, std::make_format_args(args...));
 		} catch(std::exception &e) {
-			formattedString = "[Logger error] Wrong log format (" + std::string { e.what() } +
-							  "), please use fmt formatting for logger. Message: \"" + message
-							  + "\".";
+			formattedString = "[Logger error] Wrong log format (" + std::string {e.what()} +
+							  "), please use fmt formatting for logger. Message: \"" + message + "\".";
 		}
 
 		return formattedString;
@@ -215,7 +197,6 @@ private:
 		return std::is_same_v<decltype(message), std::string> ||
 			   std::is_same_v<decltype(message), const char *>;
 	}
-
 };
 
 }

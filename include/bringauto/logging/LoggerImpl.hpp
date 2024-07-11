@@ -1,22 +1,43 @@
 #pragma once
 
-
-#include <bringauto/logging/LoggerVerbosity.hpp>
 #include <bringauto/logging/LoggerSettings.hpp>
+#include <bringauto/logging/LoggerVerbosity.hpp>
+
 
 
 namespace bringauto::logging {
-
+/**
+ * Class containing functions that differ for various loggers
+ */
 class LoggerImpl {
-    public:
+public:
+	/**
+	 * Create logger prints warning if set setting is not suppor
+//todoted
+	 * @param settings global logger settings, if some settings that are set are not supported prints a warning message
+	 */
+	void initLogger(const LoggerSettings &settings);
 
-    void initLogger(const LoggerSettings &settings);
+	/**
+	 * Message logging, method will log message to logger and/or all sinks
+	 * @param verbosity verbosity lvl
+	 * @param message message to log
+	 * @param programName logger identifier
+	 */
+	void logImplementation(LoggerVerbosity verbosity, std::string message, const std::string &programName);
 
-    void logImplementation(LoggerVerbosity verbosity, std::string message, const std::string &programName);
+	/**
+	 * Message logging, method will log message to logger and/or all sinks
+	 * @param verbosity verbosity lvl
+	 * @param message message to log
+	 * @param programName logger identifier
+	 */
 
-    void logImplementation(LoggerVerbosity verbosity, char const * message, const std::string &programName);
+	void logImplementation(LoggerVerbosity verbosity, char const *message, const std::string &programName);
 
-    void destroyLogger();
-
+	/**
+	 * Destroys logger, addSink() init() can be run again
+	 */
+	void destroyLogger();
 };
 }

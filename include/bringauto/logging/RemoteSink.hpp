@@ -1,12 +1,12 @@
 #pragma once
 
-#include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/Logger.hpp>
+#include <bringauto/logging/Sink.hpp>
 
-#include <string>
-#include <regex>
 #include <iostream>
 #include <optional>
+#include <regex>
+#include <string>
 
 
 
@@ -26,9 +26,9 @@ public:
 		Params(const std::string &ipv4String, unsigned int serverPort): ipv4(ipv4String), port(serverPort) {
 			throwIfParamsNotValid(ipv4String, serverPort);
 		};
-		const unsigned int port {};                      ///remote app port
-		const std::string ipv4 {};                   ///remote server address
-		std::optional<LoggerVerbosity> verbosity; ///verbosity specific for sink, overrides default logger verbosity
+		const unsigned int port {};              ///remote app port
+		const std::string ipv4 {};               ///remote server address
+		std::optional<LoggerVerbosity> verbosity;///verbosity specific for sink, overrides default logger verbosity
 
 	private:
 		/**

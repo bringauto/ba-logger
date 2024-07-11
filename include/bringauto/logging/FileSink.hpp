@@ -1,12 +1,12 @@
 #pragma once
 
-#include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/Logger.hpp>
+#include <bringauto/logging/Sink.hpp>
 #include <bringauto/logging/SizeLiterals.hpp>
 
-#include <string>
 #include <filesystem>
 #include <optional>
+#include <string>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -18,6 +18,7 @@ namespace bringauto::logging {
  */
 class FileSink: public Sink {
 public:
+
 	/**
 	 * Specific file sink parameters
 	 */
@@ -26,18 +27,19 @@ public:
 		/**
 		 * Constructor, file sink does need file name (without extension) and directory to save them
 		 */
-		Params(const std::filesystem::path &logDirectoryPath, const std::string &logFileName): fileName(
-				logFileName), fileDir(logDirectoryPath) {
+		Params(const std::filesystem::path &logDirectoryPath, const std::string &logFileName): fileName(logFileName),
+																							   fileDir(logDirectoryPath) {
 			throwIfParamsNotValid(logDirectoryPath, logFileName);
 		};
 
-		const std::string fileName {};               ///log file name
-		const std::filesystem::path fileDir {};      /// directory path for log files
-		unsigned long long maxFileSize = 50_KiB;       /// maximum size of one log file, in !bytes!
+		const std::string fileName {};          ///log file name
+		const std::filesystem::path fileDir {}; /// directory path for log files
+		unsigned long long maxFileSize = 50_KiB;/// maximum size of one log file, in !bytes!
 		/// number of files that can be created, one file will be created and additional numberOfRotatedFiles will be created to rotate
-		unsigned int numberOfRotatedFiles { 5 };
-		std::optional<LoggerVerbosity> verbosity; /// verbosity specific for sink, overrides default logger verbosity
+		unsigned int numberOfRotatedFiles {5};
+		std::optional<LoggerVerbosity> verbosity;/// verbosity specific for sink, overrides default logger verbosity
 	private:
+
 		/**
 		 * Checking validity of log directory and log name, throws std::invalid_argument if arguments are invalid
 		 * @param ipv4String IPv4 string to check
@@ -55,7 +57,6 @@ public:
 			if(!isFilenameCorrect(logFileName)) {
 				throw std::invalid_argument(logFileName + " contains invalid symbols.");
 			}
-
 		}
 
 		static bool isDirWritable(const std::filesystem::path &dir) {
@@ -65,7 +66,7 @@ public:
 			auto ownerId = buf.st_uid;
 			auto groupID = buf.st_gid;
 			auto myId = getuid();
-			if(myId == 0) { // is running with root privileges
+			if(myId == 0) {/// is running with root privileges
 				return true;
 			}
 
@@ -98,7 +99,7 @@ public:
 		}
 
 		static bool isFilenameCorrect(const std::string &filename) {
-			std::array forbiddenCharacters { '/' };
+			std::array forbiddenCharacters {'/'};
 			for(const auto &character: forbiddenCharacters) {
 				if(filename.find(character) != std::string::npos) {
 					return false;

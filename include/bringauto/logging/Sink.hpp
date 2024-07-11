@@ -1,8 +1,8 @@
 #pragma once
 
+#include <bringauto/logging/Concepts.hpp>
 #include <bringauto/logging/LoggerId.hpp>
 #include <bringauto/logging/LoggerVerbosity.hpp>
-#include <bringauto/logging/Concepts.hpp>
 
 #include <string>
 

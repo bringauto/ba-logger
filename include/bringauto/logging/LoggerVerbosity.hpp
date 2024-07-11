@@ -1,5 +1,6 @@
 
-	#pragma once
+#pragma once
+
 namespace bringauto::logging {
     /***
 	 * Log message verbosity enum
