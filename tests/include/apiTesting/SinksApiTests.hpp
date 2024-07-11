@@ -1,11 +1,13 @@
 #pragma once
 
 #include <bringauto/logging/Logger.hpp>
+#include <bringauto/logging/LoggerId.hpp>
 
 #include <gtest/gtest.h>
 
 
 
+constexpr bringauto::logging::LoggerId testId = {.id = "id1"};
 class SinksApiTests: public ::testing::Test {
 protected:
 
@@ -13,7 +15,7 @@ protected:
 	}
 
 	void TearDown() override {
-		bringauto::logging::Logger::destroy();
+		bringauto::logging::Logger<testId, bringauto::logging::LoggerImpl>::destroy();
 	}
 
 	bool hasWriteAccess(const std::filesystem::path &dir) {
@@ -26,5 +28,4 @@ protected:
 		}
 		return isWritable;
 	}
-
 };

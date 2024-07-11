@@ -50,7 +50,7 @@ TEST_F(SinksApiTests, RemoteSinkCreation
 
 	RemoteSink::Params params { "127.0.0.1", 56 };
 	params.
-				  verbosity = Logger::Verbosity::Error;
+				  verbosity = LoggerVerbosity::Error;
 
 	EXPECT_NO_THROW(RemoteSink({ params })
 	);
@@ -63,7 +63,7 @@ TEST_F(SinksApiTests, ConsoleSinkCreation
 
 	ConsoleSink::Params params {};
 	params.
-				  verbosity = Logger::Verbosity::Debug;
+				  verbosity = LoggerVerbosity::Debug;
 	EXPECT_NO_THROW(ConsoleSink({ params })
 	);
 }

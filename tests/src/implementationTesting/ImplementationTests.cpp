@@ -13,66 +13,69 @@
 
 using namespace bringauto::logging;
 
+
+using Logger1 = Logger<testId, LoggerImpl>;
+
 TEST_F(ImplementationTests, destroyLogger) {
-	Logger::addSink<ConsoleSink>();
-	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
-	Logger::destroy();
-	Logger::addSink<ConsoleSink>();
-	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
+	Logger1::addSink<ConsoleSink>();
+	EXPECT_NO_THROW(Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug }));
+	Logger1::destroy();
+	Logger1::addSink<ConsoleSink>();
+	EXPECT_NO_THROW(Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug }));
 }
 
 TEST_F(ImplementationTests, logWrongVerbosity) {
-	Logger::addSink<ConsoleSink>();
-	Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug });
-	EXPECT_ANY_THROW(Logger::log((Logger::Verbosity)INT_MAX, logMessage));
+	Logger1::addSink<ConsoleSink>();
+	Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug });
+	EXPECT_ANY_THROW(Logger1::log((LoggerVerbosity)INT_MAX, logMessage));
 
 
 }
 
 TEST_F(ImplementationTests, loggerCreateWrongVerbosity) {
-	Logger::addSink<ConsoleSink>();
-	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings { loggerName, (Logger::Verbosity)INT_MAX }));
+	Logger1::addSink<ConsoleSink>();
+	EXPECT_ANY_THROW(Logger1::init(LoggerSettings { loggerName, (LoggerVerbosity)INT_MAX }));
 }
 
 
 TEST_F(ImplementationTests, sinkCreateWrongVerbosity) {
 	ConsoleSink::Params params {};
-	params.verbosity = (Logger::Verbosity)INT_MAX;
+	params.verbosity = (LoggerVerbosity)INT_MAX;
 
-	Logger::addSink<ConsoleSink>(params);
-	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings(loggerName, Logger::Verbosity::Debug)));
+	Logger1::addSink<ConsoleSink>(params);
+	EXPECT_ANY_THROW(Logger1::init(LoggerSettings(loggerName, LoggerVerbosity::Debug)));
 }
 
 TEST_F(ImplementationTests, consoleLog) {
-	Logger::addSink<ConsoleSink>();
-	Logger::init({ loggerName, Logger::Verbosity::Debug });
+	Logger1::addSink<ConsoleSink>();
+	Logger1::init({ loggerName, LoggerVerbosity::Debug });
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logDebug(logMessage););
+	EXPECT_NO_THROW(Logger1::logDebug(logMessage););
 	std::string output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("debug"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logInfo(logMessage););
+	EXPECT_NO_THROW(Logger1::logInfo(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("info"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logWarning(logMessage););
+	EXPECT_NO_THROW(Logger1::logWarning(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("warning"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logError(logMessage););
+	EXPECT_NO_THROW(Logger1::logError(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("error"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logCritical(logMessage););
+	EXPECT_NO_THROW(Logger1::logCritical(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("critical"), std::string::npos);
@@ -86,15 +89,15 @@ TEST_F(ImplementationTests, fileLog) {
 	FileSink::Params params { logDirPath, filename + extension };
 	params.numberOfRotatedFiles = 1;
 	params.maxFileSize = 16*1024;
-	Logger::addSink<FileSink>(params);
-	Logger::init({ loggerName, Logger::Verbosity::Debug });
+	Logger1::addSink<FileSink>(params);
+	Logger1::init({ loggerName, LoggerVerbosity::Debug });
 
-	EXPECT_NO_THROW(Logger::logDebug(logMessage););
-	EXPECT_NO_THROW(Logger::logInfo(logMessage););
-	EXPECT_NO_THROW(Logger::logWarning(logMessage););
-	EXPECT_NO_THROW(Logger::logError(logMessage););
-	EXPECT_NO_THROW(Logger::logCritical(logMessage););
-	Logger::destroy(); //need for flush
+	EXPECT_NO_THROW(Logger1::logDebug(logMessage););
+	EXPECT_NO_THROW(Logger1::logInfo(logMessage););
+	EXPECT_NO_THROW(Logger1::logWarning(logMessage););
+	EXPECT_NO_THROW(Logger1::logError(logMessage););
+	EXPECT_NO_THROW(Logger1::logCritical(logMessage););
+	Logger1::destroy(); //need for flush
 
 	std::ifstream logFile(logFilePath);
 	std::string logFileContent((std::istreambuf_iterator<char>(logFile)),
@@ -120,11 +123,11 @@ TEST_F(ImplementationTests, fileRotation) {
 	params.maxFileSize = 10;
 	params.numberOfRotatedFiles = numberOfFiles;
 
-	EXPECT_NO_THROW(Logger::addSink<FileSink>(params));
-	EXPECT_NO_THROW(Logger::init({ loggerName, Logger::Verbosity::Debug }));
+	EXPECT_NO_THROW(Logger1::addSink<FileSink>(params));
+	EXPECT_NO_THROW(Logger1::init({ loggerName, LoggerVerbosity::Debug }));
 
 	for(int i = 0; i < 10; i++) {
-		EXPECT_NO_THROW(Logger::logCritical(logMessage));
+		EXPECT_NO_THROW(Logger1::logCritical(logMessage));
 	}
 
 	EXPECT_TRUE(std::filesystem::exists(logDirPath.string() + filename + extension));
@@ -137,32 +140,32 @@ TEST_F(ImplementationTests, fileRotation) {
 
 TEST_F(ImplementationTests, verbosityIgnoreLogConsole) {
 	ConsoleSink::Params params {};
-	params.verbosity = Logger::Verbosity::Warning;
-	Logger::addSink<ConsoleSink>(params);
+	params.verbosity = LoggerVerbosity::Warning;
+	Logger1::addSink<ConsoleSink>(params);
 
 
-	Logger::init({ loggerName, Logger::Verbosity::Info });
+	Logger1::init({ loggerName, LoggerVerbosity::Info });
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logDebug(logMessage););
+	EXPECT_NO_THROW(Logger1::logDebug(logMessage););
 	std::string output = testing::internal::GetCapturedStdout();
 	EXPECT_EQ(output.find(logMessage), std::string::npos);
 	EXPECT_EQ(output.find("debug"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logInfo(logMessage););
+	EXPECT_NO_THROW(Logger1::logInfo(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_EQ(output.find(logMessage), std::string::npos);
 	EXPECT_EQ(output.find("info"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logWarning(logMessage););
+	EXPECT_NO_THROW(Logger1::logWarning(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("warning"), std::string::npos);
 
 	testing::internal::CaptureStdout();
-	EXPECT_NO_THROW(Logger::logCritical(logMessage););
+	EXPECT_NO_THROW(Logger1::logCritical(logMessage););
 	output = testing::internal::GetCapturedStdout();
 	EXPECT_NE(output.find(logMessage), std::string::npos);
 	EXPECT_NE(output.find("critical"), std::string::npos);
@@ -174,19 +177,19 @@ TEST_F(ImplementationTests, verbosityIgnoreLogFile) {
 		return;
 	}
 	FileSink::Params params { logDirPath, filename + extension };
-	params.verbosity = Logger::Verbosity::Warning;
+	params.verbosity = LoggerVerbosity::Warning;
 	params.numberOfRotatedFiles = 1;
 	params.maxFileSize = 16*1024;
-	Logger::addSink<FileSink>(params);
+	Logger1::addSink<FileSink>(params);
 
 
-	Logger::init({ loggerName, Logger::Verbosity::Info });
-	EXPECT_NO_THROW(Logger::logDebug(logMessage););
-	EXPECT_NO_THROW(Logger::logInfo(logMessage););
-	EXPECT_NO_THROW(Logger::logWarning(logMessage););
-	EXPECT_NO_THROW(Logger::logError(logMessage););
-	EXPECT_NO_THROW(Logger::logCritical(logMessage););
-	Logger::destroy(); //need for flush
+	Logger1::init({ loggerName, LoggerVerbosity::Info });
+	EXPECT_NO_THROW(Logger1::logDebug(logMessage););
+	EXPECT_NO_THROW(Logger1::logInfo(logMessage););
+	EXPECT_NO_THROW(Logger1::logWarning(logMessage););
+	EXPECT_NO_THROW(Logger1::logError(logMessage););
+	EXPECT_NO_THROW(Logger1::logCritical(logMessage););
+	Logger1::destroy(); //need for flush
 
 	std::ifstream logFile(logFilePath);
 	std::string logFileContent((std::istreambuf_iterator<char>(logFile)),
@@ -204,28 +207,28 @@ TEST_F(ImplementationTests, verbosityIgnoreLogFile) {
 }
 
 TEST_F(ImplementationTests,destroySyslogLogger) {
-	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
-	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
-	Logger::destroy();
-	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
-	EXPECT_NO_THROW(Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug }));
+	Logger1::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_NO_THROW(Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug }));
+	Logger1::destroy();
+	Logger1::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_NO_THROW(Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug }));
 }
 
 TEST_F(ImplementationTests,SyslogWrongVerbosity) {
-	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
-	Logger::init(Logger::LoggerSettings { loggerName, Logger::Verbosity::Debug });
-	EXPECT_ANY_THROW(Logger::log((Logger::Verbosity)INT_MAX, logMessage));
+	Logger1::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	Logger1::init(LoggerSettings { loggerName, LoggerVerbosity::Debug });
+	EXPECT_ANY_THROW(Logger1::log((LoggerVerbosity)INT_MAX, logMessage));
 }
 
 TEST_F(ImplementationTests, SyslogLoggerCreateWrongVerbosity) {
-	Logger::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
-	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings { loggerName, (Logger::Verbosity)INT_MAX }));
+	Logger1::addSink<SyslogSink>({ "lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true });
+	EXPECT_ANY_THROW(Logger1::init(LoggerSettings { loggerName, (LoggerVerbosity)INT_MAX }));
 }
 
 TEST_F(ImplementationTests, SyslogSinkCreateWrongVerbosity) {
 	SyslogSink::Params params {"lol", bringauto::logging::Option::E_LOG_PERROR, bringauto::logging::Facility::E_LOG_USER, true};
-	params.verbosity = (Logger::Verbosity)INT_MAX;
+	params.verbosity = (LoggerVerbosity)INT_MAX;
 
-	Logger::addSink<SyslogSink>(params);
-	EXPECT_ANY_THROW(Logger::init(Logger::LoggerSettings(loggerName, Logger::Verbosity::Debug)));
+	Logger1::addSink<SyslogSink>(params);
+	EXPECT_ANY_THROW(Logger1::init(LoggerSettings(loggerName, LoggerVerbosity::Debug)));
 }

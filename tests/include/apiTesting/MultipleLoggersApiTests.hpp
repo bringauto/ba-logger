@@ -12,6 +12,7 @@
 
 
 constexpr bringauto::logging::LoggerId testId = {.id = "id1"};
+constexpr bringauto::logging::LoggerId testId2 = {.id = "id2"};
 class LoggerApiTests: public ::testing::Test {
 protected:	
 
@@ -20,6 +21,7 @@ protected:
 
 	void TearDown() override {
 		bringauto::logging::Logger<testId, bringauto::logging::LoggerImpl>::destroy();
+		bringauto::logging::Logger<testId2, bringauto::logging::LoggerImpl>::destroy();
 	}
 
 	bringauto::logging::LoggerSettings defaultLoggerSettings {"test",
