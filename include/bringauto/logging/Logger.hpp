@@ -16,9 +16,11 @@
 #include <vector>
 
 
+
 namespace bringauto::logging {
 
 using Verbosity = LoggerVerbosity;
+
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
@@ -160,7 +162,7 @@ public:
 
 private:
 	inline static std::vector<std::shared_ptr<Sink>> sinks_;///static list of sinks that will be added to logger
-	inline static std::string loggerName_ {};              ///name of program that will be used in logging
+	inline static std::string loggerName_ {};               ///name of program that will be used in logging
 	inline static bool initialized_ {false};                ///true if logger is initialized (able to log)
 	inline static K loggingImpl_ {};
 
@@ -174,6 +176,7 @@ private:
 	 * @return final string
 	 */
 	template <typename T, typename... Args>
+		requires(Formattable<Args> && ...)
 	static std::string getFormattedString(T message, Args... args) {
 		std::string formattedString;
 		try {
