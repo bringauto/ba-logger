@@ -6,6 +6,18 @@ using namespace bringauto::logging;
 
 using Logger1 = Logger<testId, LoggerImpl>;
 
+TEST_F(LoggerApiTests, settingsAssertions) {
+	ASSERT_EQ(defaultLoggerSettings.loggerName, "test");
+	ASSERT_EQ(defaultLoggerSettings.verbosity, bringauto::logging::LoggerVerbosity::Debug);
+	ASSERT_EQ(secondLoggerSettings.loggerName, "test2");
+	ASSERT_EQ(secondLoggerSettings.verbosity, bringauto::logging::LoggerVerbosity::Debug);
+	ASSERT_EQ(remoteSinkParams.ipv4, "127.0.0.1");
+	ASSERT_EQ(remoteSinkParams.port, 15379);
+	ASSERT_EQ(fileSinkParams.fileDir, "./");
+	ASSERT_EQ(fileSinkParams.fileName, "tests.txt");
+	ASSERT_EQ(logMessage, "log this message");
+}
+
 TEST_F(LoggerApiTests, logWithoutInit) {
 	EXPECT_ANY_THROW(Logger1::logWarning(logMessage));
 
