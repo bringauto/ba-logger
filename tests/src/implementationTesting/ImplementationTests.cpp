@@ -13,7 +13,6 @@
 
 using namespace bringauto::logging;
 
-
 using Logger1 = Logger<testId, LoggerImpl>;
 
 TEST_F(ImplementationTests, destroyLogger) {
@@ -36,7 +35,6 @@ TEST_F(ImplementationTests, loggerCreateWrongVerbosity) {
 	Logger1::addSink<ConsoleSink>();
 	EXPECT_ANY_THROW(Logger1::init(LoggerSettings { loggerName, (LoggerVerbosity)INT_MAX }));
 }
-
 
 TEST_F(ImplementationTests, sinkCreateWrongVerbosity) {
 	ConsoleSink::Params params {};

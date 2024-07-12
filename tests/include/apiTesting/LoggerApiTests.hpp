@@ -11,6 +11,7 @@
 #include <string>
 
 
+
 constexpr bringauto::logging::LoggerId testId = {.id = "id1"};
 class LoggerApiTests: public ::testing::Test {
 protected:	
