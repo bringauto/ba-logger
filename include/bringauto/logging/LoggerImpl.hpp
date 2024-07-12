@@ -12,8 +12,8 @@ namespace bringauto::logging {
 class LoggerImpl {
 public:
 	/**
-	 * Create logger prints warning if set setting is not suppor
-//todoted
+	 * Create logger prints warning if set setting is not supported
+//todo
 	 * @param settings global logger settings, if some settings that are set are not supported prints a warning message
 	 */
 	void initLogger(const LoggerSettings &settings);
