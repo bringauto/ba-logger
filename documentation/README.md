@@ -31,7 +31,7 @@ If verbosity level is set to Warning level, it will not show Debug and Info.
 List of parameters of sinks and logger
 
 ### Logger
-- programName_ - name of the program, will be used by logger as logger name
+- loggerName_ - name of the logger, will be used in output
 - filter - optional structure for setting message filtering
 - logFormat - optional format of logging message
 - verbosity - if sink does not have verbosity set, this verbosity will be used by sink if verbosity was not provided for sink

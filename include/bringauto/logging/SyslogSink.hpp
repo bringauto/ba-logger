@@ -79,9 +79,9 @@ public:
 
 	/**
 	 * Specific initialization, file sink will be added to logger
-	 * @param programName name of program, logger uses same name
+	 * @param loggerNamename of logger
 	 */
-	void init(const std::string &programName) override;
+	void init(const std::string &loggerName) override;
 
 private:
 	Params params_;

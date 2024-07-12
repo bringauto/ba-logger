@@ -48,7 +48,7 @@ public:
 	 * Create logger with given params, if implementation does not support any of given params exception will be thrown.
 	 * Sinks created using addSink() function BEFORE init call will be added to logger (init() function will be called on them)
 	 * Init will throw runtime_error if init() is used more then once without calling first or if no sink was added
-	 * @param params global logger settings
+	 * @param settingss logger settings
 	 */
 	static void init(const LoggerSettings &settings) {
 		if(initialized_) {
@@ -58,9 +58,9 @@ public:
 			throw std::runtime_error("Trying to init logger without any sinks, please add sinks first.");
 		}
 		loggingImpl_.initLogger(settings);
-		programName_ = settings.programName;
+		loggerName_ = settings.loggerName;
 		for(const auto &sink: sinks_) {
-			sink->init(programName_);
+			sink->init(loggerName_);
 		}
 		sinks_.clear();
 		initialized_ = true;
@@ -82,10 +82,10 @@ public:
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
 		}
 		if(isSupportedType(message)) {
-			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), programName_);
+			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), loggerName_);
 			return;
 		}
-		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", programName_);
+		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", loggerName_);
 	};
 
 	/**
@@ -160,7 +160,7 @@ public:
 
 private:
 	inline static std::vector<std::shared_ptr<Sink>> sinks_;///static list of sinks that will be added to logger
-	inline static std::string programName_ {};              ///name of program that will be used in logging
+	inline static std::string loggerName_ {};              ///name of program that will be used in logging
 	inline static bool initialized_ {false};                ///true if logger is initialized (able to log)
 	inline static K loggingImpl_ {};
 

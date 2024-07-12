@@ -8,7 +8,7 @@
 
 
 void bringauto::logging::LoggerImpl::initLogger(const LoggerSettings &settings) {
-	auto logger = std::make_shared<spdlog::logger>(settings.programName);
+	auto logger = std::make_shared<spdlog::logger>(settings.loggerName);
 	logger->set_level(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(settings.verbosity));
 	spdlog::register_logger(logger);
 
@@ -25,14 +25,14 @@ void bringauto::logging::LoggerImpl::destroyLogger() {
 	spdlog::drop_all();
 }
 
-void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, std::string message, const std::string &programName) {
-	auto logger = spdlog::get(programName);
+void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, std::string message, const std::string &loggerName) {
+	auto logger = spdlog::get(loggerName);
 	logger->log(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(verbosity), message);
 }
 
 
-void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, char const *message, const std::string &programName) {
-	auto logger = spdlog::get(programName);
+void bringauto::logging::LoggerImpl::logImplementation(Verbosity verbosity, char const *message, const std::string &loggerName) {
+	auto logger = spdlog::get(loggerName);
 	logger->log(bringauto::logging::SpdlogHelper::mapToSpdlogVerbosity(verbosity), message);
 }
 

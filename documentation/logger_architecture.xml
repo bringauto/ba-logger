@@ -12,7 +12,7 @@
             <mxRectangle x="230" y="410" width="70" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="QJfez3J2qh0FHW_mrVqk-20" value="init(programName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="QJfez3J2qh0FHW_mrVqk-19" vertex="1">
+        <mxCell id="QJfez3J2qh0FHW_mrVqk-20" value="init(loggerName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="QJfez3J2qh0FHW_mrVqk-19" vertex="1">
           <mxGeometry y="26" width="200" height="26" as="geometry" />
         </mxCell>
         <mxCell id="QJfez3J2qh0FHW_mrVqk-26" value="0..n" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" parent="1" vertex="1">
@@ -26,7 +26,7 @@
         <mxCell id="QJfez3J2qh0FHW_mrVqk-28" value="ConsoleSink(params)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="QJfez3J2qh0FHW_mrVqk-27" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="QJfez3J2qh0FHW_mrVqk-39" value="init(programName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
+        <mxCell id="QJfez3J2qh0FHW_mrVqk-39" value="init(loggerName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
           <mxGeometry x="90" y="502" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="QJfez3J2qh0FHW_mrVqk-47" style="edgeStyle=elbowEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;elbow=vertical;" parent="1" edge="1">
@@ -43,7 +43,7 @@
         <mxCell id="QJfez3J2qh0FHW_mrVqk-41" value="RemoteSink(params)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="QJfez3J2qh0FHW_mrVqk-40" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="QJfez3J2qh0FHW_mrVqk-42" value="init(programName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
+        <mxCell id="QJfez3J2qh0FHW_mrVqk-42" value="init(loggerName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
           <mxGeometry x="420" y="502" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="QJfez3J2qh0FHW_mrVqk-43" value="FileSink.hpp" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#ffe6cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;strokeColor=#d79b00;" parent="1" vertex="1">
@@ -54,7 +54,7 @@
         <mxCell id="QJfez3J2qh0FHW_mrVqk-44" value="FileSink(params)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="QJfez3J2qh0FHW_mrVqk-43" vertex="1">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="QJfez3J2qh0FHW_mrVqk-45" value="init(programName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
+        <mxCell id="QJfez3J2qh0FHW_mrVqk-45" value="init(loggerName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
           <mxGeometry x="590" y="502" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="QJfez3J2qh0FHW_mrVqk-50" value="" style="endArrow=none;html=1;exitX=0.438;exitY=0;exitDx=0;exitDy=0;rounded=0;exitPerimeter=0;" parent="1" source="QJfez3J2qh0FHW_mrVqk-27" edge="1">
@@ -163,7 +163,7 @@
         <mxCell id="bJpuRQqwX4xA8uUPe-6w-6" value="SyslogSink(params)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="bJpuRQqwX4xA8uUPe-6w-5">
           <mxGeometry y="26" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bJpuRQqwX4xA8uUPe-6w-7" value="init(programName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="1">
+        <mxCell id="bJpuRQqwX4xA8uUPe-6w-7" value="init(loggerName)" style="text;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="1">
           <mxGeometry x="255" y="502" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="bJpuRQqwX4xA8uUPe-6w-12" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="1">

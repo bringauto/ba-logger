@@ -19,8 +19,8 @@ private:
 
 	/**
 	 * Specific initialization, file sink will be added to logger
-	 * @param programName name of program, logger uses same name
+	 * @param loggerName name of logger
 	 */
-	virtual void init(const std::string &programName) {};
+	virtual void init(const std::string &loggerName) {};
 };
 }

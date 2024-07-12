@@ -22,18 +22,18 @@ public:
 	 * Message logging, method will log message to logger and/or all sinks
 	 * @param verbosity verbosity lvl
 	 * @param message message to log
-	 * @param programName logger identifier
+	 * @param loggerName logger identifier
 	 */
-	void logImplementation(LoggerVerbosity verbosity, std::string message, const std::string &programName);
+	void logImplementation(LoggerVerbosity verbosity, std::string message, const std::string &loggerName);
 
 	/**
 	 * Message logging, method will log message to logger and/or all sinks
 	 * @param verbosity verbosity lvl
 	 * @param message message to log
-	 * @param programName logger identifier
+	 * @param loggerName logger identifier
 	 */
 
-	void logImplementation(LoggerVerbosity verbosity, char const *message, const std::string &programName);
+	void logImplementation(LoggerVerbosity verbosity, char const *message, const std::string &loggerName);
 
 	/**
 	 * Destroys logger, addSink() init() can be run again

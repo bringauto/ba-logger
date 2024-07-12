@@ -13,12 +13,12 @@ namespace bringauto::logging {
  */
 struct LoggerSettings {
 	/**
-	 * Constructor, logger does need name of program and default verbosity in order to work correctly
+	 * Constructor, logger does need name and default verbosity in order to work correctly
 	 */
-	LoggerSettings(const std::string &nameOfProgram, LoggerVerbosity defaultVerbosity): programName(
-																								nameOfProgram),
+	LoggerSettings(const std::string &nameOfLogger, LoggerVerbosity defaultVerbosity): loggerName(
+																								nameOfLogger),
 																						verbosity(defaultVerbosity) {};
-	const std::string programName {};  ///name of program that will be used in log
+	const std::string loggerName {};  ///name of logger that will be used in output
 	const LoggerVerbosity verbosity {};///default verbosity for all sinks (lower bound), if set to Warning, only Warning, Error and Critical will be logged
 
 	/**

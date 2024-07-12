@@ -29,10 +29,10 @@ concept Logable = requires(
 		LoggerVerbosity verbosity,
 		std::string message,
 		char const *message1,
-		const std::string programName) {
+		const std::string loggerName) {
 	t.initLogger(settings);
-	t.logImplementation(verbosity, message, programName);
-	t.logImplementation(verbosity, message1, programName);
+	t.logImplementation(verbosity, message, loggerName);
+	t.logImplementation(verbosity, message1, loggerName);
 	t.destroyLogger();
 };
 }
