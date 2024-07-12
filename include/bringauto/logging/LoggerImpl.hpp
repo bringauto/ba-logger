@@ -7,7 +7,7 @@
 
 namespace bringauto::logging {
 /**
- * Class containing functions that differ for various loggers
+ * Class contains functions that differ for various logger implementations
  */
 class LoggerImpl {
 public:
