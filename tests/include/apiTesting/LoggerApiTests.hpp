@@ -3,7 +3,6 @@
 #include <bringauto/logging/ConsoleSink.hpp>
 #include <bringauto/logging/FileSink.hpp>
 #include <bringauto/logging/Logger.hpp>
-#include <bringauto/logging/LoggerId.hpp>
 #include <bringauto/logging/RemoteSink.hpp>
 
 #include <gtest/gtest.h>

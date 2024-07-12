@@ -3,12 +3,10 @@
 #include <bringauto/logging/Concepts.hpp>
 #include <bringauto/logging/LoggerId.hpp>
 #include <bringauto/logging/LoggerImpl.hpp>
-#include <bringauto/logging/LoggerSettings.hpp>
-#include <bringauto/logging/LoggerVerbosity.hpp>
 #include <bringauto/logging/Sink.hpp>
 
 #include <format>
-#include <iostream>
+//#include <iostream>
 #include <memory>
 #include <optional>
 #include <string>

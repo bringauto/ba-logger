@@ -1,7 +1,6 @@
 #pragma once
 
 #include <bringauto/logging/Logger.hpp>
-#include <bringauto/logging/LoggerId.hpp>
 
 #include <gtest/gtest.h>
 

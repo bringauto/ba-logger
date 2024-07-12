@@ -1,7 +1,6 @@
 #pragma once
 
 #include <bringauto/logging/LoggerSettings.hpp>
-#include <bringauto/logging/LoggerVerbosity.hpp>
 
 
 
