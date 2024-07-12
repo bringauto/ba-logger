@@ -18,9 +18,6 @@
 
 
 namespace bringauto::logging {
-
-using Verbosity = LoggerVerbosity;
-
 /**
  * This class handles logger creation and addition of sinks
  * Supported message types are: std::string, const char*
@@ -79,7 +76,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 		requires(Formattable<Args> && ...)
-	static constexpr void log(Verbosity verbosity, T message, Args... args) {
+	static constexpr void log(LoggerVerbosity verbosity, T message, Args... args) {
 		if(!initialized_) {
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
 		}
@@ -87,7 +84,7 @@ public:
 			loggingImpl_.logImplementation(verbosity, getFormattedString(message, args...), loggerName_);
 			return;
 		}
-		loggingImpl_.logImplementation(Verbosity::Warning, "Unsupported message type", loggerName_);
+		loggingImpl_.logImplementation(LoggerVerbosity::Warning, "Unsupported message type", loggerName_);
 	};
 
 	/**
@@ -99,7 +96,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 	static void logDebug(T message, Args... args) {
-		log(Verbosity::Debug, message, args...);
+		log(LoggerVerbosity::Debug, message, args...);
 	}
 
 	/**
@@ -111,7 +108,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 	static void logInfo(T message, Args... args) {
-		log(Verbosity::Info, message, args...);
+		log(LoggerVerbosity::Info, message, args...);
 	}
 
 	/**
@@ -123,7 +120,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 	static void logWarning(T message, Args... args) {
-		log(Verbosity::Warning, message, args...);
+		log(LoggerVerbosity::Warning, message, args...);
 	}
 
 	/**
@@ -135,7 +132,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 	static void logError(T message, Args... args) {
-		log(Verbosity::Error, message, args...);
+		log(LoggerVerbosity::Error, message, args...);
 	}
 
 	/**
@@ -147,7 +144,7 @@ public:
 	 */
 	template <typename T, typename... Args>
 	static void logCritical(T message, Args... args) {
-		log(Verbosity::Critical, message, args...);
+		log(LoggerVerbosity::Critical, message, args...);
 	}
 
 	/**
