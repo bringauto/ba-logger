@@ -8,7 +8,7 @@ implementations. To use this project compile it with wanted implementation and p
 Following dependencies must be installed on the host system
 
 - cmake [>= 3.20]
-- C++17
+- C++20
 - [cmlib](https://github.com/cmakelib/cmakelib)
 
 ## Build

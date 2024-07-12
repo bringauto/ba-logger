@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 PROJECT(libbringauto_logger)
 
-SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD 20)
 
 SET(libbringauto_logger_VERSION 1.3.0)
 SET(LIB_TYPE "SPDLOG" CACHE STRING "Set implementation that will be compiled")
@@ -106,15 +106,6 @@ FUNCTION(BRINGAUTO_LOGGER_INSTALL)
     INSTALL(
             DIRECTORY
             ${CMAKE_CURRENT_SOURCE_DIR}/include/bringauto
-            DESTINATION
-            include/libbringauto_logger
-            COMPONENT
-            Devel
-    )
-
-    INSTALL(
-            DIRECTORY
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/fmt
             DESTINATION
             include/libbringauto_logger
             COMPONENT

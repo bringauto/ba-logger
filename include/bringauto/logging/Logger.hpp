@@ -1,10 +1,8 @@
 #pragma once
-#define FMT_HEADER_ONLY ///allows use of headers only fmt formatting library included in this library, will be switched for std::format in the future
 
 #include <bringauto/logging/Sink.hpp>
 
-#include <fmt/fmt.h>
-
+#include <format>
 #include <memory>
 #include <vector>
 #include <string>
@@ -15,9 +13,15 @@
 
 
 namespace bringauto::logging {
+
+
+template<typename T>
+concept Formattable = requires(T t) {
+	{ std::formatter<T, char>{} } -> std::same_as<std::formatter<T, char>>;
+};
 /**
  * This class handles logger creation and addition of sinks
- * Supported message types are: std::string, const char*, fmt
+ * Supported message types are: std::string, const char*
  * Call addSink() to add sinks and init() to initialize the logger. log with log() and log<Verbosity>() functions
  */
 class Logger {
@@ -108,13 +112,13 @@ public:
 	/**
 	 * Log message with set verbosity, if logger was not created using init() function exception is thrown
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param verbosity see Verbosity enum for options
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 *
 	 */
-	template <typename T, typename... Args>
+	template <typename T, typename... Args> requires (Formattable<Args> && ...)
 	static constexpr void log(Verbosity verbosity, T message, Args... args) {
 		if(!initialized_) {
 			throw std::runtime_error("Logger was not initialize! Please call Logger::init() before log functions");
@@ -130,7 +134,7 @@ public:
 	/**
 	 * Log debugging message, method will call log() with Debug verbosity
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 */
@@ -142,7 +146,7 @@ public:
 	/**
 	 * Log info message, method will call log() with Info verbosity
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 */
@@ -154,7 +158,7 @@ public:
 	/**
 	 * Log warning message, method will call log() with Warning verbosity
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 */
@@ -166,7 +170,7 @@ public:
 	/**
 	 * Log error message, method will call log() with Error verbosity
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 */
@@ -178,7 +182,7 @@ public:
 	/**
 	 * Log critical message, method will call log() with Critical verbosity
 	 * @tparam T message with supported type - see isSupportedType() to see which types are supported
-	 * @tparam Args fmt/std::format arguments message pack, fmt is supported format
+	 * @tparam Args std::format arguments message pack
 	 * @param message message to log of supported type - see isSupportedType()
 	 * @param args additional arguments for supported types
 	 */
@@ -223,21 +227,21 @@ private:
 	 */
 	static void destroyLogger();
 
+
 	/**
-	 * Logger supports fmt formatting (in future will be replaced with std::format) this method takes input string (or other supported string type like const char*)
-	 * and argument pack that contain all arguments needed to create final string and uses fmt to transform it into final string that will be logged
-	 * to see fmt formatting example see https://fmt.dev/latest/index.html
+	 * This method takes input string (or other supported string type like const char*)
+	 * and argument pack that contain all arguments needed to create final string that will be logged
 	 * @tparam T supported message type
-	 * @tparam Args argument pack
+	 * @tparam Args argument pack according to the format string fmt
 	 * @param message message in fmt format or simple string
 	 * @param args arguments needed in message to form final string
 	 * @return final string
 	 */
-	template <typename T, typename ...Args>
+	template <typename T, typename ...Args>  requires (Formattable<Args> && ...)
 	static std::string getFormattedString(T message, Args ...args) {
 		std::string formattedString;
 		try {
-			formattedString = fmt::format(message, args...);
+			formattedString = std::vformat(message, std::make_format_args(args...)); 
 		} catch(std::exception &e) {
 			formattedString = "[Logger error] Wrong log format (" + std::string { e.what() } +
 							  "), please use fmt formatting for logger. Message: \"" + message
