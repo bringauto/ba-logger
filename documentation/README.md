@@ -13,9 +13,9 @@ First of all, sinks have to be added to logger. This will be accomplished callin
 of sink and its parameters (see parameters section). There can be more sinks of same type with different settings, for
 example to file loggers, one for error logging and one for debug logging. After all sinks have been added call Logger::init.
 After initialization thread safe logging can be performed from anywhere. Logging functions:
-- Logger::log(verbosity, message)
-- Logger::logVERBOSITY(message)
-Fmt message format is supported
+- Logger<LoggerId, LoggerImpl>::log(verbosity, message)
+- Logger<LoggerId, LoggerImpl>::logVERBOSITY(message)
+Std::format message format is supported
 
 ### Verbosity levels
     Debug = 0    -  debugging messages (i.e. memory dump)
@@ -37,17 +37,17 @@ List of parameters of sinks and logger
 - verbosity - if sink does not have verbosity set, this verbosity will be used by sink if verbosity was not provided for sink
 
 ### ConsoleSink
-- verbosity - optional verbosity of sink (Logger::verbosity)
+- verbosity - optional verbosity of sink (loggerVerbosity)
 
 ### FileSink
-- verbosity - optional verbosity of sink (Logger::verbosity)
+- verbosity - optional verbosity of sink (loggerVerbosity)
 - fileDir - directory path where logs will be stored
 - filename - name of log file with extension
 - maxFileSize - maximum size of file in bytes, after reaching this size file will be rotated
 - numberOfRotatedFiles - number of files that will be created and rotated, so it will create 1 + numberOfRotatedFiles files
 
 ### RemoteSink
-- verbosity - optional verbosity of sink (Logger::verbosity)
+- verbosity - optional verbosity of sink (loggerVerbosity)
 - ipv4 - IPv4 of remote server where logs will be sended
 - port - port of server app
 - 

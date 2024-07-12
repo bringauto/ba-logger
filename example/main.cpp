@@ -1,4 +1,3 @@
-
 #include <bringauto/logging/ConsoleSink.hpp>
 #include <bringauto/logging/FileSink.hpp>
 #include <bringauto/logging/Logger.hpp>
@@ -24,7 +23,7 @@ void createConsoleSink() {
 }
 
 void createConsoleSink2() {
-	//Logger2::addSink<ConsoleSink>();
+	Logger3::addSink<ConsoleSink>();
 
 	ConsoleSink::Params paramConsoleSink;
 	paramConsoleSink.verbosity = LoggerVerbosity::Debug;
@@ -46,7 +45,7 @@ void createRemoteSink() {
 
 	RemoteSink::Params paramRemoteSink {"192.168.1.2", 3333};
 	paramRemoteSink.verbosity = LoggerVerbosity::Critical;
-	Logger1::addSink<RemoteSink>(paramRemoteSink);
+	Logger3::addSink<RemoteSink>(paramRemoteSink);
 }
 
 void createSyslogSink() {
@@ -54,7 +53,7 @@ void createSyslogSink() {
 
 	SyslogSink::Params paramRemoteSink {"syslog", bringauto::logging::Option::E_LOG_PID, bringauto::logging::Facility::E_LOG_SYSLOG, false};
 	paramRemoteSink.verbosity = LoggerVerbosity::Critical;
-	Logger1::addSink<SyslogSink>(paramRemoteSink);
+	Logger3::addSink<SyslogSink>(paramRemoteSink);
 }
 
 void initLogger() {
@@ -77,15 +76,13 @@ void initLogger3() {
 }
 
 int main(int arg, char **argv) {
-	//createConsoleSink();
 	createConsoleSink2();
 	createFileSink();
-	/*createRemoteSink();
-	createSyslogSink();*/
+	createRemoteSink();
+	createSyslogSink();
 	initLogger();
 	initLogger2();
 	initLogger3();
-
 
 	Logger1::logInfo(std::string {"Demo app"});
 	Logger2::logInfo("Info about app");
