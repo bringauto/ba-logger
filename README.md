@@ -1,58 +1,87 @@
-# BringAuto logger library
+# BringAuto Logger Library
 
-This library provides stable API for logging in our internal project. Project consists of .hpp header files and multiple
-implementations. To use this project compile it with wanted implementation and provide .so and headers to your app.
+The BringAuto Logger Library provides a robust and stable API for logging in internal projects. This library consists of header files (.hpp) and multiple implementations. To use the library, compile it with your desired implementation, then integrate the resulting `.so` file and headers into your application.
 
 ## Requirements
 
-Following dependencies must be installed on the host system
+Before building the library, ensure the following dependencies are installed on your host system:
 
-- cmake [>= 3.20]
-- C++20
-- [cmlib](https://github.com/cmakelib/cmakelib)
+- **CMake** [>= 3.20]
+- **C++20**
+- **[cmlib](https://github.com/cmakelib/cmakelib)**
+- **[spdlog](https://github.com/gabime/spdlog)**
+- **[Google Test](https://github.com/google/googletest/blob/main/googletest/README.md)** (for running tests)
 
-## Build
+## Build Instructions
 
-``` bash
+To build the library, follow these steps:
+
+```bash
 mkdir -p _build && cd _build
 cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMLIB_DIR=<path_to_cmlib_dir> -DCMAKE_BUILD_TYPE=Release
 make -j 8
 ```
 
-If you have properly installed CMLIB and exported the `CMLIB_DIR` environment variable, you can skip the `-DCMLIB_DIR=<path_to_cmlib_dir>` option.
+### Environment Variable
+
+If CMLIB is installed and the `CMLIB_DIR` environment variable is set, you can omit the `-DCMLIB_DIR=<path_to_cmlib_dir>` option.
 
 ### Implementations
 
-Choose with `-DLIB_TYPE=<TYPE>`, supported types:
+Specify the logging implementation type with the `-DLIB_TYPE=<TYPE>` option. Supported types are:
 
-- DUMMY - testing purposes, outputs test messages into console
-- SPDLOG - uses [spdlog](https://github.com/gabime/spdlog) logging library
+- **DUMMY**: For testing purposes; outputs log messages to the console.
+- **SPDLOG**: Utilizes the [spdlog](https://github.com/gabime/spdlog) logging library.
 
-### Example
+### Example Application
 
-For building example app use -DBRINGAUTO_SAMPLES=ON with cmake
+To build the example application, enable the `BRINGAUTO_SAMPLES` option in CMake:
 
-### Tests
+```bash
+cmake .. -DBRINGAUTO_SAMPLES=ON
+```
 
-- For building tests use -DBRINGAUTO_TESTS=ON
-- For api and chosen implementation tests or -DBRINGAUTO_ALL_TESTS=ON
-- For api and all implementation tests, run test with command ctest
+The executable for the example application will be located in the `./_build/example/` directory.
+
+### Running Tests
+
+To build and run tests, use the following options:
+
+- **Build Tests**: Use the flag `-DBRINGAUTO_TESTS=ON`. Test executables will be located in the `./_build/tests/` directory.
+
+To execute the tests, run:
+
+```bash
+ctest .
+```
+
+from within the `_build` directory after configuring with `-DBRINGAUTO_TESTS=ON`.
 
 ## Usage
 
-Generate package with cpack command, install the package and include:
+To integrate the library into your project:
 
-```cmake
-FIND_PACKAGE(libbringauto_logger)
-TARGET_LINK_LIBRARIES(<target> bringauto_logger::bringauto_logger)
-```
+1. **Generate a Package**: Use the `cpack` command to create a package.
+2. **Install the Package**: Install the package on your system.
+3. **Include in CMake**:
 
-To create logger first call Logger::addSink() function with specific sink and parameters. After adding all desired sinks
-call Logger::init() with settings. After initialization you are able to call all log functions. See example app for more
-details.
+    ```cmake
+    FIND_PACKAGE(libbringauto_logger)
+    TARGET_LINK_LIBRARIES(<target> bringauto_logger::bringauto_logger)
+    ```
+
+4. **Initialize Logger**:
+
+    - Call `Logger::addSink()` with the desired sink and parameters.
+    - Call `Logger::init()` to finalize the setup.
+    - After initialization, you can use the logging functions. Refer to the example application for detailed usage.
 
 ## Installation
 
-- For installation provide -DBRINGAUTO_INSTALL switch to cmake
-- For package creation provide -DBRINGAUTO_INSTALL switch to cmake, created package rename to match our package naming
-  convention: `<packagename>_<version>_<architecture>-<distro>.<extension>`, for example `libbringauto_logger_1.5.01_amd64-ubuntu2004.zip`
+To install the library, enable the `BRINGAUTO_INSTALL` option in CMake:
+
+```bash
+cmake .. -DBRINGAUTO_INSTALL=ON
+```
+
+To create a package, use the `BRINGAUTO_INSTALL` option and rename the package to follow our naming convention: `<packagename>_<version>_<architecture>-<distro>.<extension>`. For example: `libbringauto_logger_1.5.01_amd64-ubuntu2004.zip`.
