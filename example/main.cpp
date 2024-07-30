@@ -58,27 +58,27 @@ void createSyslogSink() {
 
 void initLogger() {
 	LoggerSettings loggerSettings {"Demo1", LoggerVerbosity::Debug};
-	loggerSettings.filter = {true, 200};
-	loggerSettings.logFormat = "*** [%H:%M:%S %z] ***";
+	// loggerSettings.filter = {true, 200}; // Filters are not implemented in spdlog
+	// loggerSettings.logFormat = "*** [%H:%M:%S %z] ***"; // Log format is not implemented in spdlog
 	Logger1::init(loggerSettings);
 }
 void initLogger2() {
 	LoggerSettings loggerSettings {"Demo2", LoggerVerbosity::Debug};
-	loggerSettings.filter = {true, 200};
-	loggerSettings.logFormat = "*** [%H:%M:%S %z] ***";
+	// loggerSettings.filter = {true, 200}; // Filters are not implemented in spdlog
+	// loggerSettings.logFormat = "*** [%H:%M:%S %z] ***"; // Log format is not implemented in spdlog
 	Logger2::init(loggerSettings);
 }
 void initLogger3() {
 	LoggerSettings loggerSettings {"Demo3", LoggerVerbosity::Debug};
-	loggerSettings.filter = {true, 200};
-	loggerSettings.logFormat = "*** [%H:%M:%S %z] ***";
+	// loggerSettings.filter = {true, 200}; // Filters are not implemented in spdlog
+	// loggerSettings.logFormat = "*** [%H:%M:%S %z] ***"; // Log format is not implemented in spdlog
 	Logger3::init(loggerSettings);
 }
 
 int main(int arg, char **argv) {
 	createConsoleSink2();
 	createFileSink();
-	createRemoteSink();
+	// createRemoteSink(); // Remote sink is not implemented yet
 	createSyslogSink();
 	initLogger();
 	initLogger2();
