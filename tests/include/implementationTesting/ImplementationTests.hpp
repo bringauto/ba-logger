@@ -11,15 +11,18 @@
 
 
 std::mutex g_singleThread;
+constexpr bringauto::logging::LoggerId testId = {.id = "id1"};
 
 class ImplementationTests: public ::testing::Test {
 protected:
+
 	void SetUp() override {
 		g_singleThread.lock();
 	}
-
+	
+	
 	void TearDown() override {
-		bringauto::logging::Logger::destroy();
+		bringauto::logging::Logger<testId, bringauto::logging::LoggerImpl>::destroy();
 		g_singleThread.unlock();
 		removeLogFiles();
 	}

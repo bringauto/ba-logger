@@ -1,5 +1,9 @@
 #pragma once
 
+#include <bringauto/logging/Concepts.hpp>
+#include <bringauto/logging/LoggerId.hpp>
+#include <bringauto/logging/LoggerVerbosity.hpp>
+
 #include <string>
 
 
@@ -10,12 +14,13 @@ namespace bringauto::logging {
  */
 class Sink {
 private:
+	template <LoggerId ID, Logable K>
 	friend class Logger;
 
 	/**
 	 * Specific initialization, file sink will be added to logger
-	 * @param programName name of program, logger uses same name
+	 * @param loggerName name of logger
 	 */
-	virtual void init(const std::string &programName) {};
+	virtual void init(const std::string &loggerName) {};
 };
 }

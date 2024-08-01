@@ -5,5 +5,6 @@
 
 
 
-void bringauto::logging::SyslogSink::init(const std::string &programName) {
+void bringauto::logging::SyslogSink::init(const std::string &loggerName) {
+    std::cout<<"["<<loggerName<<"] SyslogSink was initialised." <<std::endl;
 }

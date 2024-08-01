@@ -14,7 +14,7 @@ namespace bringauto::logging {
 class ConsoleSink: public Sink {
 public:
 	struct Params {
-		std::optional<Logger::Verbosity> verbosity; ///verbosity specific for sink, overrides default logger verbosity
+		std::optional<LoggerVerbosity> verbosity; ///verbosity specific for sink, overrides default logger verbosity
 	};
 
 	/**
@@ -25,9 +25,9 @@ public:
 
 	/**
 	 * Specific initialization, file sink will be added to logger
-	 * @param programName name of program, logger uses same name
+	 * @param loggerName name of logger
 	 */
-	void init(const std::string &programName) override;
+	void init(const std::string &loggerName) override;
 
 private:
 	Params params_;

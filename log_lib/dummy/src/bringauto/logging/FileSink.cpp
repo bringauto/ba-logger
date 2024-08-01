@@ -5,5 +5,6 @@
 
 
 
-void bringauto::logging::FileSink::init(const std::string &programName) {
+void bringauto::logging::FileSink::init(const std::string &loggerName) {
+    std::cout<<"["<<loggerName<<"] FileSink was initialised." <<std::endl;
 }
