@@ -84,4 +84,4 @@ To install the library, enable the `BRINGAUTO_INSTALL` option in CMake:
 cmake .. -DBRINGAUTO_INSTALL=ON
 ```
 
-To create a package, use the `BRINGAUTO_INSTALL` option and rename the package to follow our naming convention: `<packagename>_<version>_<architecture>-<distro>.<extension>`. For example: `libbringauto_logger_1.5.01_amd64-ubuntu2004.zip`.
+To create a package, use the `BRINGAUTO_PACKAGE` option and rename the package to follow our naming convention: `<packagename>_<version>_<architecture>-<distro>.<extension>`. For example: `libbringauto_logger_1.5.01_amd64-ubuntu2004.zip`.
