@@ -1,6 +1,13 @@
 # BringAuto Logger Library
 
-The BringAuto Logger Library provides a robust and stable API for logging in internal projects. This library consists of header files (.hpp) and multiple implementations. To use the library, compile it with your desired implementation, then integrate the resulting `.so` file and headers into your application.
+BringAuto Logger Library provides a robust and stable API for logging.
+
+The library serves as a consistent API to provide access to different logging libraries, formats, and technologies.
+
+This library consists of header files (.hpp) and multiple implementations. To use the library compile it with your desired implementation,
+install it (or create a package) and follow the instructions in the Usage section.
+
+
 
 ## Requirements
 
@@ -18,9 +25,13 @@ To build the library, follow these steps:
 
 ```bash
 mkdir -p _build && cd _build
-cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMLIB_DIR=<path_to_cmlib_dir> -DCMAKE_BUILD_TYPE=Release
+cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMAKE_BUILD_TYPE=Release [-DCMLIB_DIR=<path_to_cmlib_dir>]
 make -j 8
 ```
+
+Other configuration options
+
+- `BRINGAUTO_SYSTEM_DEP=[ON|OFF]` - set the variable to `ON` if the system installed dependencies should be used instead of precompiled ones
 
 ### Environment Variable
 
