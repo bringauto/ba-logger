@@ -3,7 +3,7 @@ PROJECT(libbringauto_logger)
 
 SET(CMAKE_CXX_STANDARD 20)
 
-SET(libbringauto_logger_VERSION 2.0.0)
+SET(libbringauto_logger_VERSION 2.0.1)
 SET(LIB_TYPE "SPDLOG" CACHE STRING "Set implementation that will be compiled")
 
 OPTION(BRINGAUTO_SAMPLES OFF)
