@@ -24,12 +24,15 @@ To build the library, follow these steps:
 
 ```bash
 mkdir -p _build && cd _build
-cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMAKE_BUILD_TYPE=Release
+cmake ..
 make -j 8
 ```
 
 Other configuration options
 
+- `LIB_TYPE=<TYPE>` - specify the logging implementation (see [Implementations](#implementations) below); defaults to `SPDLOG`
+- `CMAKE_BUILD_TYPE=<TYPE>` - build type (e.g. `Release`, `Debug`)
+- `CMAKE_INSTALL_PREFIX=<path>` - installation prefix
 - `BRINGAUTO_SYSTEM_DEP=[ON|OFF]` - set the variable to `ON` if the system installed dependencies should be used instead of precompiled ones
 
 ### Implementations
