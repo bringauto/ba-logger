@@ -54,6 +54,11 @@ FOREACH (_TO_BUILD IN LISTS LIB_TYPES_TO_BUILD)
     ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/log_lib/${_TO_BUILD_NAME}/)
 ENDFOREACH ()
 
+STRING(TOLOWER ${LIB_TYPE} _lib_type_lower)
+ADD_LIBRARY(bringauto_logger INTERFACE)
+TARGET_LINK_LIBRARIES(bringauto_logger INTERFACE bringauto_logger_api bringauto_logger_${_lib_type_lower})
+ADD_LIBRARY(bringauto_logger::bringauto_logger ALIAS bringauto_logger)
+
 IF (${BRINGAUTO_SAMPLES})
     ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/example/)
 ENDIF ()
@@ -66,9 +71,6 @@ ENDIF ()
 
 FUNCTION(BRINGAUTO_LOGGER_INSTALL)
     STRING(TOLOWER ${LIB_TYPE} _LIB_TYPE_TO_INSTALL)
-
-    ADD_LIBRARY(bringauto_logger INTERFACE)
-    TARGET_LINK_LIBRARIES(bringauto_logger INTERFACE bringauto_logger_api bringauto_logger_${_LIB_TYPE_TO_INSTALL})
 
     INCLUDE(GNUInstallDirs)
 
