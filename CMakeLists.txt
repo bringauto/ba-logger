@@ -3,7 +3,7 @@ PROJECT(libbringauto_logger)
 
 SET(CMAKE_CXX_STANDARD 20)
 
-SET(libbringauto_logger_VERSION 2.0.1)
+SET(libbringauto_logger_VERSION 3.0.0)
 SET(LIB_TYPE "SPDLOG" CACHE STRING "Set implementation that will be compiled")
 
 OPTION(BRINGAUTO_SAMPLES OFF)
@@ -12,11 +12,6 @@ OPTION(BRINGAUTO_INSTALL "Enable install" OFF)
 OPTION(BRINGAUTO_PACKAGE "Enable package generation" OFF)
 OPTION(BRINGAUTO_SYSTEM_DEP "Enable system dependencies" OFF)
 
-
-FIND_PACKAGE(CMLIB
-        COMPONENTS CMDEF CMUTIL STORAGE
-        REQUIRED
-        )
 
 IF(NOT BRINGAUTO_SYSTEM_DEP)
     INCLUDE(cmake/Dependencies.cmake)

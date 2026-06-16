@@ -15,7 +15,6 @@ Before building the library, ensure the following dependencies are installed on 
 
 - **CMake** [>= 3.20]
 - **C++20**
-- **[cmlib](https://github.com/cmakelib/cmakelib)**
 - **[spdlog](https://github.com/gabime/spdlog)**
 - **[Google Test](https://github.com/google/googletest/blob/main/googletest/README.md)** (for running tests)
 
@@ -25,17 +24,13 @@ To build the library, follow these steps:
 
 ```bash
 mkdir -p _build && cd _build
-cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMAKE_BUILD_TYPE=Release [-DCMLIB_DIR=<path_to_cmlib_dir>]
+cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMAKE_BUILD_TYPE=Release
 make -j 8
 ```
 
 Other configuration options
 
 - `BRINGAUTO_SYSTEM_DEP=[ON|OFF]` - set the variable to `ON` if the system installed dependencies should be used instead of precompiled ones
-
-### Environment Variable
-
-If CMLIB is installed and the `CMLIB_DIR` environment variable is set, you can omit the `-DCMLIB_DIR=<path_to_cmlib_dir>` option.
 
 ### Implementations
 
