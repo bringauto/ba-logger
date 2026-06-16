@@ -33,7 +33,13 @@ Other configuration options
 - `LIB_TYPE=<TYPE>` - specify the logging implementation (see [Implementations](#implementations) below); defaults to `SPDLOG`
 - `CMAKE_BUILD_TYPE=<TYPE>` - build type (e.g. `Release`, `Debug`)
 - `CMAKE_INSTALL_PREFIX=<path>` - installation prefix
-- `BRINGAUTO_SYSTEM_DEP=[ON|OFF]` - set the variable to `ON` if the system installed dependencies should be used instead of precompiled ones
+
+Dependency resolution strategy (`BA_PACKAGE_SOURCE`, default `AUTO`):
+
+- `AUTO` - tries system → prebuilt → FetchContent in order, stops at first success
+- `SYSTEM_PACKAGES` - system-installed spdlog only; error if not found
+- `PREBUILT_PACKAGES` - prebuilt package from Gitea only; error if not found
+- `FETCH_CONTENT` - clone and build from source via FetchContent
 
 ### Implementations
 
