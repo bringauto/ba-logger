@@ -10,6 +10,7 @@ OPTION(BRINGAUTO_SAMPLES OFF)
 OPTION(BRINGAUTO_TESTS "Enable tests" OFF)
 OPTION(BRINGAUTO_INSTALL "Enable install" OFF)
 OPTION(BRINGAUTO_PACKAGE "Enable package generation" OFF)
+
 SET(BA_PACKAGE_SOURCE "AUTO" CACHE STRING "Dependency resolution strategy: AUTO, SYSTEM_PACKAGES, PREBUILT_PACKAGES, or FETCH_CONTENT")
 SET_PROPERTY(CACHE BA_PACKAGE_SOURCE PROPERTY STRINGS AUTO SYSTEM_PACKAGES PREBUILT_PACKAGES FETCH_CONTENT)
 
@@ -29,8 +30,6 @@ ENDFUNCTION()
 
 LOGGER_CHECK_SYMBOLS()
 
-
-
 SET(_SUPPORTED_LIB_TYPES "DUMMY" "SPDLOG")
 IF (NOT "${LIB_TYPE}" IN_LIST _SUPPORTED_LIB_TYPES)
     MESSAGE(FATAL_ERROR "Library type ${LIB_TYPE} is not supported.")
@@ -45,9 +44,9 @@ ENDIF ()
 ADD_LIBRARY(bringauto_logger_api INTERFACE)
 SET_TARGET_PROPERTIES(bringauto_logger_api PROPERTIES LINKER_LANGUAGE CXX)
 TARGET_INCLUDE_DIRECTORIES(bringauto_logger_api INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include/libbringauto_logger>
-        )
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/libbringauto_logger>
+)
 
 FOREACH (_TO_BUILD IN LISTS LIB_TYPES_TO_BUILD)
     STRING(TOLOWER ${_TO_BUILD} _TO_BUILD_NAME)
@@ -68,40 +67,39 @@ IF (BRINGAUTO_TESTS)
     ADD_SUBDIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/tests/)
 ENDIF ()
 
-
 FUNCTION(BRINGAUTO_LOGGER_INSTALL)
     STRING(TOLOWER ${LIB_TYPE} _LIB_TYPE_TO_INSTALL)
 
     INCLUDE(GNUInstallDirs)
 
     INSTALL(TARGETS bringauto_logger_${_LIB_TYPE_TO_INSTALL} EXPORT libbringauto_loggerTargets
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION include
-            )
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION include
+    )
 
     INSTALL(TARGETS bringauto_logger_api EXPORT libbringauto_loggerTargets
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION include
-            )
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION include
+    )
 
     INSTALL(TARGETS bringauto_logger EXPORT libbringauto_loggerTargets
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION include
-            )
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin
+        INCLUDES DESTINATION include
+    )
 
     INSTALL(
-            DIRECTORY
-            ${CMAKE_CURRENT_SOURCE_DIR}/include/bringauto
-            DESTINATION
-            include/libbringauto_logger
-            COMPONENT
-            Devel
+        DIRECTORY
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/bringauto
+        DESTINATION
+        include/libbringauto_logger
+        COMPONENT
+        Devel
     )
 
     INCLUDE(CMakePackageConfigHelpers)
@@ -119,7 +117,7 @@ FUNCTION(BRINGAUTO_LOGGER_INSTALL)
 
     EXPORT(EXPORT libbringauto_loggerTargets
         FILE "${CMAKE_CURRENT_BINARY_DIR}/libbringauto_logger/libbringauto_loggerTargets.cmake"
-        )
+    )
 
     SET(ConfigPackageLocation lib/cmake/libbringauto_logger)
     INSTALL(EXPORT libbringauto_loggerTargets
@@ -129,7 +127,7 @@ FUNCTION(BRINGAUTO_LOGGER_INSTALL)
         bringauto_logger::
         DESTINATION
         ${ConfigPackageLocation}
-        )
+    )
 
     INSTALL(
         FILES
@@ -142,7 +140,7 @@ FUNCTION(BRINGAUTO_LOGGER_INSTALL)
     )
 ENDFUNCTION()
 
-FUNCTION(bringauto_logger_package)
+FUNCTION(BRINGAUTO_LOGGER_PACKAGE)
     SET(CPACK_GENERATOR ZIP)
     SET(CPACK_PACKAGE_CONTACT "Jakub Trubka <jakub.trubka@bringauto.com>")
     SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Jakub Trubka <jakub.trubka@bringauto.com>")
@@ -162,5 +160,3 @@ IF (BRINGAUTO_PACKAGE)
     ENDIF()
     BRINGAUTO_LOGGER_PACKAGE()
 ENDIF()
-
-

@@ -7,8 +7,6 @@ The library serves as a consistent API to provide access to different logging li
 This library consists of header files (.hpp) and multiple implementations. To use the library compile it with your desired implementation,
 install it (or create a package) and follow the instructions in the Usage section.
 
-
-
 ## Requirements
 
 Before building the library, ensure the following dependencies are installed on your host system:
@@ -23,7 +21,7 @@ Before building the library, ensure the following dependencies are installed on 
 To build the library, follow these steps:
 
 ```bash
-mkdir -p _build && cd _build
+mkdir -p build && cd build
 cmake ..
 make -j 8
 ```
