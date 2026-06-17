@@ -7,15 +7,12 @@ The library serves as a consistent API to provide access to different logging li
 This library consists of header files (.hpp) and multiple implementations. To use the library compile it with your desired implementation,
 install it (or create a package) and follow the instructions in the Usage section.
 
-
-
 ## Requirements
 
 Before building the library, ensure the following dependencies are installed on your host system:
 
 - **CMake** [>= 3.20]
 - **C++20**
-- **[cmlib](https://github.com/cmakelib/cmakelib)**
 - **[spdlog](https://github.com/gabime/spdlog)**
 - **[Google Test](https://github.com/google/googletest/blob/main/googletest/README.md)** (for running tests)
 
@@ -24,18 +21,23 @@ Before building the library, ensure the following dependencies are installed on 
 To build the library, follow these steps:
 
 ```bash
-mkdir -p _build && cd _build
-cmake .. -DCMAKE_INSTALL_PREFIX=<path_where_to_install> -DLIB_TYPE=SPDLOG -DCMAKE_BUILD_TYPE=Release [-DCMLIB_DIR=<path_to_cmlib_dir>]
+mkdir -p build && cd build
+cmake ..
 make -j 8
 ```
 
 Other configuration options
 
-- `BRINGAUTO_SYSTEM_DEP=[ON|OFF]` - set the variable to `ON` if the system installed dependencies should be used instead of precompiled ones
+- `LIB_TYPE=<TYPE>` - specify the logging implementation (see [Implementations](#implementations) below); defaults to `SPDLOG`
+- `CMAKE_BUILD_TYPE=<TYPE>` - build type (e.g. `Release`, `Debug`)
+- `CMAKE_INSTALL_PREFIX=<path>` - installation prefix
 
-### Environment Variable
+Dependency resolution strategy (`BA_PACKAGE_SOURCE`, default `AUTO`):
 
-If CMLIB is installed and the `CMLIB_DIR` environment variable is set, you can omit the `-DCMLIB_DIR=<path_to_cmlib_dir>` option.
+- `AUTO` - tries system → prebuilt → FetchContent in order, stops at first success
+- `SYSTEM_PACKAGES` - system-installed spdlog only; error if not found
+- `PREBUILT_PACKAGES` - prebuilt package from Gitea only; error if not found
+- `FETCH_CONTENT` - clone and build from source via FetchContent
 
 ### Implementations
 
