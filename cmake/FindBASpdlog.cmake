@@ -49,9 +49,7 @@ IF(BA_PACKAGE_SOURCE STREQUAL "AUTO" OR BA_PACKAGE_SOURCE STREQUAL "FETCH_CONTEN
     INCLUDE(FetchContent)
     FETCHCONTENT_DECLARE(spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG        v1.14.1
-        GIT_SHALLOW    TRUE
-    )
+        GIT_TAG        27cb4c76708608465c413f6d0e6b8d99a4d84302)
     FETCHCONTENT_MAKEAVAILABLE(spdlog)
     SET(BASpdlog_FOUND TRUE)
 ENDIF()
