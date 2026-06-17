@@ -3,7 +3,22 @@ PROJECT(libbringauto_logger)
 
 SET(CMAKE_CXX_STANDARD 20)
 
-SET(libbringauto_logger_VERSION 3.0.0)
+SET(_version_file "${CMAKE_CURRENT_LIST_DIR}/version.txt")
+IF(NOT EXISTS "${_version_file}")
+    MESSAGE(FATAL_ERROR "Missing version file: ${_version_file}")
+ENDIF()
+
+FILE(STRINGS "${_version_file}" _version_line REGEX "^version=" LIMIT_COUNT 1)
+IF(NOT _version_line)
+    MESSAGE(FATAL_ERROR "No 'version=' entry found in ${_version_file}")
+ENDIF()
+
+STRING(REGEX REPLACE "^version=" "" libbringauto_logger_VERSION "${_version_line}")
+STRING(STRIP "${libbringauto_logger_VERSION}" libbringauto_logger_VERSION)
+IF(NOT libbringauto_logger_VERSION MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+$")
+    MESSAGE(FATAL_ERROR "Invalid version format in ${_version_file}: '${libbringauto_logger_VERSION}'")
+ENDIF()
+
 SET(LIB_TYPE "SPDLOG" CACHE STRING "Set implementation that will be compiled")
 
 OPTION(BRINGAUTO_SAMPLES OFF)
