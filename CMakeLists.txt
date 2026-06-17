@@ -3,7 +3,9 @@ PROJECT(libbringauto_logger)
 
 SET(CMAKE_CXX_STANDARD 20)
 
-SET(libbringauto_logger_VERSION 3.0.0)
+FILE(STRINGS "${CMAKE_CURRENT_LIST_DIR}/version.txt" _version_line REGEX "^version=")
+STRING(REGEX REPLACE "^version=" "" libbringauto_logger_VERSION "${_version_line}")
+
 SET(LIB_TYPE "SPDLOG" CACHE STRING "Set implementation that will be compiled")
 
 OPTION(BRINGAUTO_SAMPLES OFF)
