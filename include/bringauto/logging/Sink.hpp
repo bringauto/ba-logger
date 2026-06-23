@@ -19,7 +19,6 @@ private:
 
 	/**
 	 * Specific initialization, file sink will be added to logger
-	 * @param loggerName name of logger
 	 */
 	virtual void init(const std::string &/*loggerName*/) {};
 };
