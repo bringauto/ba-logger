@@ -83,7 +83,7 @@ public:
 			return;
 		}
 		loggingImpl_.logImplementation(LoggerVerbosity::Warning, "Unsupported message type", loggerName_);
-	};
+	}
 
 	/**
 	 * Log debugging message, method will call log() with Debug verbosity
@@ -153,7 +153,7 @@ public:
 		loggingImpl_.destroyLogger();
 		sinks_.clear();
 		initialized_ = false;
-	};
+	}
 
 private:
 	inline static std::vector<std::shared_ptr<Sink>> sinks_;///static list of sinks that will be added to logger
@@ -182,7 +182,7 @@ private:
 		}
 
 		return formattedString;
-	};
+	}
 
 	/**
 	 * Method checks if type T is supported "string" type in this library, std::string and const char* are supported
